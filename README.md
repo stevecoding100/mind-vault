@@ -10,6 +10,8 @@ MindVault is an intuitive web application designed to help users capture, organi
 * Persistent Storage: Your ideas are securely stored in our PostgreSQL database, ensuring data integrity and reliability.
 * Favorite Ideas: Mark your favorite ideas for quick access and inspiration.
 * Real-Time Updates: Experience seamless updates and collaboration with real-time synchronization across devices.
+
+
 **Technologies Used**
 * Frontend: React.js
 * Backend: Node.js with Express.js
