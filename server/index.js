@@ -1,5 +1,6 @@
 const { client, createTables } = require("./database/db");
 const ideaRoutes = require("./routes/ideaRoutes");
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();

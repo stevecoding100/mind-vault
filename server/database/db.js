@@ -10,6 +10,7 @@ const createTables = async () => {
       -- Create users table
       CREATE TABLE IF NOT EXISTS users (
         user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        name VARCHAR(255) NOT NULL,
         username VARCHAR(255) NOT NULL UNIQUE,
         email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,

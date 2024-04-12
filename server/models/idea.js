@@ -1,5 +1,5 @@
 const { client } = require("../database/db");
-
+const uuid = require("uuid");
 const ideaModel = {
     getAllIdeas: async () => {
         try {
@@ -14,7 +14,7 @@ const ideaModel = {
     createIdea: async (title, description, category, userId) => {
         try {
             const SQL = `INSERT INTO ideas (title, description, category, user_id) VALUE ($1,$2,$3, $4) RETURNING *`;
-            const values = [title, description, category, userId];
+            const values = [uuid.v4(), title, description, category, userId];
             const { rows } = await client.query(SQL, values);
             return rows[0];
         } catch (error) {
