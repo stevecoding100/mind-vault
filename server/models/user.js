@@ -3,8 +3,6 @@ const uuid = require("uuid");
 require("dotenv").config();
 const { client } = require("../database/db");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const JWT = process.env.JWT;
 
 const userModel = {
     getAllUsers: async () => {
