@@ -1,3 +1,5 @@
+// Handling business logic for IdeaControllers
+
 const ideaModel = require("../models/idea");
 
 const ideaController = {
@@ -11,13 +13,14 @@ const ideaController = {
         }
     },
     createIdea: async (req, res) => {
-        const { title, description, category, userId } = req.body;
+        const { userId } = req.params;
+        const { title, description, category } = req.body;
         try {
             const newIdea = await ideaModel.createIdea(
+                userId,
                 title,
                 description,
-                category,
-                userId
+                category
             );
             res.status(201).json(newIdea);
         } catch (error) {
@@ -26,11 +29,11 @@ const ideaController = {
         }
     },
     updateIdea: async (req, res) => {
-        const { id } = req.params;
+        const { ideaId } = req.params;
         const { title, description, category } = req.body;
         try {
             const updateIdea = await ideaModel.updateIdea(
-                id,
+                ideaId,
                 title,
                 description,
                 category
@@ -42,9 +45,9 @@ const ideaController = {
         }
     },
     deleteIdea: async (req, res) => {
-        const { id } = req.params;
+        const { ideaId } = req.params;
         try {
-            await ideaModel.deleteIdea(id);
+            await ideaModel.deleteIdea(ideaId);
             res.json({ message: "Idea deleted successfully" });
         } catch (error) {
             console.error("Error deleting idea:", error);

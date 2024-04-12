@@ -1,6 +1,6 @@
 const { client, createTables } = require("./database/db");
 const ideaRoutes = require("./routes/ideaRoutes");
-
+const userRoutes = require("./routes/userRoutes");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -15,6 +15,28 @@ app.use(
         allowedHeaders: "Content-Type,Authorization",
     })
 );
+
+// Mount routes
+app.use("/api", ideaRoutes);
+app.use("/api/auth", userRoutes);
+
+// You can mount other routes here...
+
+const init = async () => {
+    try {
+        console.log("connecting to database");
+        await client.connect();
+        console.log("connected to database");
+        // await createTables();
+        // console.log("tables created");
+        const port = process.env.PORT || 3000;
+        app.listen(port, () => console.log(`listening on port ${port}`));
+    } catch (error) {
+        console.error("Error creating tables:", error);
+    }
+};
+init();
+
 //for deployment only
 // const path = require("path");
 // app.get("/", (req, res) =>
@@ -24,20 +46,3 @@ app.use(
 //     "/assets",
 //     express.static(path.join(__dirname, "../client/dist/assets"))
 // );
-
-// Mount routes
-app.use("/api", ideaRoutes);
-// app.use("/api/auth", ideaRoutes);
-
-// You can mount other routes here...
-
-const init = async () => {
-    console.log("connecting to database");
-    await client.connect();
-    console.log("connected to database");
-    // await createTables();
-    // console.log("tables created");
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => console.log(`listening on port ${port}`));
-};
-init();

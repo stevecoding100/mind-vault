@@ -1,3 +1,4 @@
+// Managing the users data logic, including database operations, data validation, and business rules.
 const uuid = require("uuid");
 require("dotenv").config();
 const { client } = require("../database/db");
@@ -17,9 +18,9 @@ const userModel = {
         }
     },
     createUser: async (name, username, email, password) => {
-        const hashedPassword = await bcrypt.hash(password, 5);
         try {
-            const SQL = `INSERT INTO users (name, username, email, password,) VALUE ($1,$2,$3,$4) RETURNING *`;
+            const hashedPassword = await bcrypt.hash(password, 5);
+            const SQL = `INSERT INTO users (user_id, name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
             const values = [uuid.v4(), name, username, email, hashedPassword];
             const { rows } = await client.query(SQL, values);
             return rows[0];
@@ -30,7 +31,7 @@ const userModel = {
     },
     updateUser: async (userId, name, username, email) => {
         try {
-            const SQL = `UPDATE users SET name = $1, username = $2, email = $3, WHERE userId = $4 RETURNING *`;
+            const SQL = `UPDATE users SET name = $1, username = $2, email = $3 WHERE user_id = $4 RETURNING *`;
             const values = [name, username, email, userId];
             const { rows } = await client.query(SQL, values);
             return rows[0];
@@ -41,10 +42,9 @@ const userModel = {
     },
     deleteUser: async (userId) => {
         try {
-            const SQL = `DELETE FROM users WHERE id = $1`;
-            const response = await client.query(SQL, [userId]);
-            // Return the deleted user
-            return response.rows[0];
+            const SQL = `DELETE FROM users WHERE user_id = $1`;
+            await client.query(SQL, [userId]);
+            return true;
         } catch (error) {
             console.error("Error deleting user: ", error);
             throw error;

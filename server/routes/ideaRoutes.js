@@ -7,12 +7,12 @@ const router = express.Router();
 router.get("/ideas", ideaController.getAllIdeas);
 
 // Route to create a new idea
-router.post("/ideas", ideaController.createIdea);
+router.post("/ideas/:userId", ideaController.createIdea);
 
 // Route to update an existing idea
-router.put("/ideas/:id", ideaController.updateIdea);
+router.put("/ideas/:ideaId", ideaController.updateIdea);
 
 // Route to delete an idea
-router.delete("/ideas/:id", ideaController.deleteIdea);
+router.delete("/ideas/:ideaId", ideaController.deleteIdea);
 
 module.exports = router;
