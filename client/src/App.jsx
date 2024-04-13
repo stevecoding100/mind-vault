@@ -1,7 +1,15 @@
+import { Routes, Route } from "react-router-dom";
+import MainDashboard from "./pages/dashboard/MainDashboard";
+import LoginPage from "./pages/auth/LoginPage";
+import SignUpPage from "./pages/auth/SignUpPage";
 function App() {
     return (
         <>
-            <h1 className="text-2xl text-red-500">Hello world!</h1>
+            <Routes>
+                <Route path="/" element={<MainDashboard />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+            </Routes>
         </>
     );
 }
