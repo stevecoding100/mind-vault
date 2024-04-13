@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 //Route to fetch all users
-router.get("/users", userController.getAllUsers);
+router.get("/users", userController.isLoggedIn, userController.getAllUsers);
 
 // Route to create a new user
 router.post("/users", userController.createUser);
@@ -12,7 +12,10 @@ router.post("/users", userController.createUser);
 // Route to update an existing user
 router.put("/users/:userId", userController.updateUser);
 
-// Route to delete an idea
+// Route to delete a user
 router.delete("/users/:userId", userController.deleteUser);
+
+// Route to login an existing user
+router.post("/users/login", userController.authenticaUser);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 // Handling business logic for UserControllers
 
 const userModel = require("../models/user");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const userController = {
     getAllUsers: async (req, res) => {
@@ -51,6 +52,35 @@ const userController = {
         } catch (error) {
             console.error("Error deleting user", error);
             res.status(500).json({ message: "Internal server error" });
+        }
+    },
+    authenticaUser: async (req, res) => {
+        try {
+            const { username, password } = req.body;
+            const user = await authMiddleware.authenticate(username, password);
+            res.status(200).json(user);
+        } catch (error) {
+            console.error("Authentication error:", error);
+            res.status(error.status || 500).json("Internal server error");
+        }
+    },
+    isLoggedIn: async (req, res, next) => {
+        try {
+            const token = req.headers.authorization; // Get the token from the request headers
+            if (!token) {
+                const error = new Error("Authentication token is missing");
+                error.status = 401;
+                throw error;
+            }
+            // Verify the token and get user information
+            const user = await authMiddleware.findUserWithToken(token);
+
+            req.user = user;
+
+            // Call the next middleware or route handler
+            next();
+        } catch (error) {
+            next(error);
         }
     },
 };
