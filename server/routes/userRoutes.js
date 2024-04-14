@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 //Route to fetch all users
-router.get("/users", userController.isLoggedIn, userController.getAllUsers);
+router.get("/users", userController.getAllUsers);
 
 // Route to create a new user
 router.post("/users/signup", userController.createUser);

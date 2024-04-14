@@ -6,7 +6,7 @@ const JWT = process.env.JWT;
 const authMiddleware = {
     authenticate: async (username, password) => {
         const SQL = `
-            SELECT user_id, password FROM users WHERE username = $1
+            SELECT * FROM users WHERE username = $1
         `;
         const response = await client.query(SQL, [username]);
         if (!response.rows.length) {

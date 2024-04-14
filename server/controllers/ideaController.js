@@ -44,6 +44,16 @@ const ideaController = {
             res.status(500).json({ message: "Internal server error" });
         }
     },
+    getIdeaById: async (req, res) => {
+        const { ideaId } = req.params;
+        try {
+            const idea = await ideaController.getIdeaById(ideaId);
+            res.status(200).json(idea);
+        } catch (error) {
+            console.error("Error getting idea:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    },
     deleteIdea: async (req, res) => {
         const { ideaId } = req.params;
         try {

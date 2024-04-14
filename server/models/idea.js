@@ -36,6 +36,12 @@ const ideaModel = {
         }
     },
 
+    getIdeaById: async (ideaId) => {
+        const SQL = `SELECT * FROM ideas WHERE idea_id = $1`;
+        const response = await client.query(SQL, [ideaId]);
+        return response.rows[0];
+    },
+
     deleteIdea: async (ideaId) => {
         try {
             const SQL = `DELETE FROM ideas WHERE idea_id = $1`;
