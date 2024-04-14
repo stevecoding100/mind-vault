@@ -51,7 +51,7 @@ const SideMenu = () => {
         },
     ];
     return (
-        <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-2 pt-4 border-r-2 border-slate-300 shadow-md">
+        <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-4 pt-4 border-r-2 border-slate-300 shadow-md">
             <div className="flex justify-between w-full h-30 border-b-1 border-slate-300 pb-4">
                 <Link to="#">
                     <img
@@ -74,10 +74,10 @@ const SideMenu = () => {
                         <Link
                             to={link.to}
                             key={link.key}
-                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-800"
+                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-600"
                         >
                             <link.icon
-                                className="mr-3 text-slate-400"
+                                className="mr-3 group-hover"
                                 fontSize={18}
                             />
                             {link.name}

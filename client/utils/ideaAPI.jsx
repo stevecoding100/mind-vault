@@ -1,15 +1,20 @@
 import axios from "axios";
-
 const baseURL = import.meta.env.VITE_API_URL;
+const token = localStorage.getItem("token");
 const ideaAPI = {
     idea: {
-        getIdeas: async () => {
+        getAllIdeas: async () => {
             try {
-                const products = await axios.get(`${baseURL}/products`);
-                return products;
+                const ideas = await axios.get(`${baseURL}/ideas`, {
+                    headers: {
+                        Authorization: `${token}`,
+                    },
+                });
+                return ideas;
             } catch (error) {
-                throw new Error("Error getting products", error);
+                throw new Error("Error getting ideas", error);
             }
         },
     },
 };
+export default ideaAPI;

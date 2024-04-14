@@ -1,32 +1,21 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
-const Activity = () => {
-    const ideas = [
-        {
-            title: "AI Automation",
-            description: "Lorem Ipsum manie james jiole",
-            category: "In Progress",
-        },
-        {
-            title: "AI Automation",
-            description: "Lorem Ipsum manie james jiole",
-            category: "Complete",
-        },
-        {
-            title: "AI Automation",
-            description: "Lorem Ipsum manie james jiole",
-            category: "Complete",
-        },
-        {
-            title: "AI Automation",
-            description: "Lorem Ipsum manie james jiole",
-            category: "In Progress",
-        },
-    ];
+const Activity = ({ ideaData }) => {
+    console.log("Line 4: ", ideaData);
+
+    const truncateDescription = (description) => {
+        if (description.length > 15) {
+            return description.substring(0, 15) + "...";
+        }
+        return description;
+    };
+
     // Filter ideas to include only those with category "complete"
-    const completedIdeas = ideas.filter((idea) => idea.category === "Complete");
+    const completedIdeas = ideaData.filter(
+        (idea) => idea.category === "Complete"
+    );
     return (
-        <div className=" h-full p-2 border-l-2  border-slate-300 bg-slate-100 shadow-md">
+        <div className=" h-full p-2 border-l-2  border-slate-300 bg-slate-100 shadow-md p-3">
             <h3 className="text-xl font-semibold text-slate-700 mt-6 mb-6 p-2">
                 Completed Ideas
             </h3>
@@ -36,7 +25,7 @@ const Activity = () => {
                     className="flex justify-between items-center py-3 px-3 w-full bg-blue-100 border-b-2 border-slate-300 mb-4 rounded-md shadow-sm"
                 >
                     <h5 className="font-semibold text-slate-700">
-                        {idea.title}
+                        {truncateDescription(idea.title)}
                     </h5>
 
                     <AiOutlineCheckCircle

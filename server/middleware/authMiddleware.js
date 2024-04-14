@@ -26,12 +26,13 @@ const authMiddleware = {
     },
     findUserWithToken: async (token) => {
         try {
+            console.log("findUserToken function: ", token);
             // Verify the JWT token
             const payload = jwt.verify(token, JWT);
 
             // Fetch the user from the database using the user_id from the token
             const SQL = `SELECT * FROM users WHERE user_id = $1`;
-            const response = await client.query(SQL, [payload.user_id]);
+            const response = await client.query(SQL, [payload.id]);
 
             // If user not found, throw an error
             if (response.rows.length === 0) {

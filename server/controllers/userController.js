@@ -67,16 +67,17 @@ const userController = {
     isLoggedIn: async (req, res, next) => {
         try {
             const token = req.headers.authorization; // Get the token from the request headers
+
+            console.log("Token received in middleware:", token);
+            // Verify the token and get user information
+            const user = await authMiddleware.findUserWithToken(token);
             if (!token) {
                 const error = new Error("Authentication token is missing");
                 error.status = 401;
                 throw error;
             }
-            // Verify the token and get user information
-            const user = await authMiddleware.findUserWithToken(token);
 
             req.user = user;
-
             // Call the next middleware or route handler
             next();
         } catch (error) {
