@@ -1,6 +1,8 @@
 import SideMenu from "../../components/SideMenu";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const MainDashboard = () => {
     return (
