@@ -28,6 +28,28 @@ const SideMenu = () => {
             to: "#",
         },
     ];
+    const ideas = [
+        {
+            title: "AI Automation",
+            description: "Lorem Ipsum manie james jiole",
+            category: "In Progress",
+        },
+        {
+            title: "Car AI New Tech",
+            description: "Lorem Ipsum manie james jiole",
+            category: "Complete",
+        },
+        {
+            title: "Prime Juicer AI",
+            description: "Lorem Ipsum manie james jiole",
+            category: "Complete",
+        },
+        {
+            title: "Alexa 2.0 AI Prime",
+            description: "Lorem Ipsum manie james jiole",
+            category: "In Progress",
+        },
+    ];
     return (
         <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-2 pt-4 border-r-2 border-slate-300 shadow-md">
             <div className="flex justify-between w-full h-30 border-b-1 border-slate-300 pb-4">
@@ -78,11 +100,14 @@ const SideMenu = () => {
                     />
                 </div>
                 <div className="pt-6 flex text-sm flex-col w-full p-2 text-slate-800 h-[50vh] overflow-y-scroll">
-                    <Link className="mb-3 font-medium">1. Build AI Tool</Link>
-                    <Link className="mb-3 font-medium">
-                        2. Build Data Analyst
-                    </Link>
-                    <Link className="mb-3 font-medium">3. Build AI Tool</Link>
+                    {ideas.map((item) => (
+                        <div
+                            key={item.key}
+                            className="mb-4 py-3 px-3 w-full bg-blue-100 shadow-sm text-slate-700 rounded-md font-semibold"
+                        >
+                            <Link className="">{item.title}</Link>
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="flex flex-col mt-16 p-2">
