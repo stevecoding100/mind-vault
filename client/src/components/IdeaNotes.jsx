@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ideaAPI from "../../utils/ideaAPI";
+import { useState, useEffect } from "react";
 const IdeaNotes = ({ ideas }) => {
     const truncateDescription = (description) => {
         if (description.length > 30) {

@@ -10,7 +10,11 @@ import { CgSupport } from "react-icons/cg";
 import { BsBook } from "react-icons/bs";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { BsArrowRightCircle } from "react-icons/bs";
+import { useDisclosure } from "@nextui-org/react";
+import CreatingIdeaModal from "./CreatingIdeaModal";
 const SideMenu = () => {
+    const { onOpen } = useDisclosure();
+
     const navLinks = [
         {
             icon: AiOutlineSearch,
@@ -66,7 +70,10 @@ const SideMenu = () => {
                 </div>
             </div>
             <div className="pt-4 flex flex-col border-b-1 border-slate-300 h-80">
-                <button className="w-full  h-12 bg-blue-600 rounded-lg text-white hover:bg-blue-700 transition duration-150 ease-in-out font-bold">
+                <button
+                    onClick={onOpen}
+                    className="w-full  h-12 bg-blue-600 rounded-lg text-white hover:bg-blue-700 transition duration-150 ease-in-out font-bold"
+                >
                     + New Idea
                 </button>
                 <div className="pt-6">
@@ -74,10 +81,10 @@ const SideMenu = () => {
                         <Link
                             to={link.to}
                             key={link.key}
-                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-600"
+                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
                         >
                             <link.icon
-                                className="mr-3 group-hover"
+                                className="mr-3 group-hover text-slate-400 "
                                 fontSize={18}
                             />
                             {link.name}

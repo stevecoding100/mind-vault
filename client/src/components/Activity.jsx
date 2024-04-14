@@ -1,8 +1,6 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 const Activity = ({ ideaData }) => {
-    console.log("Line 4: ", ideaData);
-
     const truncateDescription = (description) => {
         if (description.length > 15) {
             return description.substring(0, 15) + "...";
@@ -15,7 +13,7 @@ const Activity = ({ ideaData }) => {
         (idea) => idea.category === "Complete"
     );
     return (
-        <div className=" h-full p-2 border-l-2  border-slate-300 bg-slate-100 shadow-md p-3">
+        <div className=" h-full border-l-2  border-slate-300 bg-slate-100 shadow-md p-3">
             <h3 className="text-xl font-semibold text-slate-700 mt-6 mb-6 p-2">
                 Completed Ideas
             </h3>

@@ -2,7 +2,7 @@ import IdeaNotes from "./IdeaNotes";
 
 const Header = ({ ideaData }) => {
     return (
-        <div className="w-full h-full p-8">
+        <div className=" w-full p-6">
             <h1 className="text-2xl font-bold text-slate-700">
                 Welcome Back, Nick!
             </h1>
