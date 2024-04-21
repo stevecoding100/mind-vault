@@ -12,7 +12,7 @@ const ecomAPI = {
                     formData
                 );
                 localStorage.setItem("token", user.token);
-                localStorage.setItem("userID", user.userId);
+                localStorage.setItem("userId", user.userId);
                 return user;
             } catch (error) {
                 return error;
@@ -25,7 +25,7 @@ const ecomAPI = {
                     formData
                 );
                 localStorage.setItem("token", user.data.token);
-                localStorage.setItem("userID", user.data.userId);
+                localStorage.setItem("userId", user.data.userId);
                 return user;
             } catch (error) {
                 return error;

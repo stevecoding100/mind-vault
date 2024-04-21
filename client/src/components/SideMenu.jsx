@@ -12,9 +12,7 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { useDisclosure } from "@nextui-org/react";
 import CreatingIdeaModal from "./CreatingIdeaModal";
-const SideMenu = () => {
-    const { onOpen } = useDisclosure();
-
+const SideMenu = ({ onOpen }) => {
     const navLinks = [
         {
             icon: AiOutlineSearch,
@@ -56,12 +54,12 @@ const SideMenu = () => {
     ];
     return (
         <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-4 pt-4 border-r-2 border-slate-300 shadow-md">
-            <div className="flex justify-between w-full h-30 border-b-1 border-slate-300 pb-4">
+            <div className="flex justify-between w-full h-30 border-b-2 border-slate-300 pb-4">
                 <Link to="#">
                     <img
                         src="https://www.next.us/nxtcms/resource/blob/5791594/0b81a7d7db30a12f5494cbc97b53c573/knitwear-data.jpg"
                         alt="profile avatar"
-                        className="w-10 h-10 rounded-full border-2 border-white"
+                        className="w-10 h-10 rounded-full border-1 border-white"
                     />
                 </Link>
                 <div className="text-sm">
@@ -69,7 +67,7 @@ const SideMenu = () => {
                     <p className="text-slate-700">nick.woods@gmail.com</p>
                 </div>
             </div>
-            <div className="pt-4 flex flex-col border-b-1 border-slate-300 h-80">
+            <div className="pt-4 flex flex-col border-b-2 border-slate-300 h-80">
                 <button
                     onClick={onOpen}
                     className="w-full  h-12 bg-blue-600 rounded-lg text-white hover:bg-blue-700 transition duration-150 ease-in-out font-bold"

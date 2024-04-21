@@ -17,10 +17,10 @@ const ideaController = {
         const { title, description, category } = req.body;
         try {
             const newIdea = await ideaModel.createIdea(
-                userId,
                 title,
                 description,
-                category
+                category,
+                userId
             );
             res.status(201).json(newIdea);
         } catch (error) {

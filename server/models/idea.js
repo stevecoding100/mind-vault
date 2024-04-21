@@ -13,10 +13,10 @@ const ideaModel = {
             throw error;
         }
     },
-    createIdea: async (userId, title, description, category) => {
+    createIdea: async (title, description, category, userId) => {
         try {
-            const SQL = `INSERT INTO ideas (idea_id, user_id, title, description, category) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-            const values = [uuid.v4(), userId, title, description, category];
+            const SQL = `INSERT INTO ideas (idea_id, title, description, category, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+            const values = [uuid.v4(), title, description, category, userId];
             const { rows } = await client.query(SQL, values);
             return rows[0];
         } catch (error) {

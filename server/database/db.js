@@ -26,7 +26,7 @@ const createTables = async () => {
     -- Create ideas table
     CREATE TABLE ideas (
       idea_id UUID PRIMARY KEY,
-      title  VARCHAR(50) NOT NULL,
+      title  VARCHAR(250) NOT NULL,
       description TEXT NOT NULL,
       category VARCHAR(20) NOT NULL,
       user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,

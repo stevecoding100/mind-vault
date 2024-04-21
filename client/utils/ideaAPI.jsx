@@ -8,6 +8,7 @@ const ideaAPI = {
             try {
                 const ideas = await axios.get(`${baseURL}/ideas`, {
                     headers: {
+                        "Content-Type": "application/json",
                         Authorization: `${token}`,
                     },
                 });
@@ -16,10 +17,11 @@ const ideaAPI = {
                 throw new Error("Error getting ideas", error);
             }
         },
-        createIdea: async () => {
+        createIdea: async (title, description, category) => {
             try {
                 const createIdeas = await axios.post(
-                    `${baseURL}/ideas/:${userId}`,
+                    `${baseURL}/ideas/${userId}`,
+                    { title, description, category },
                     {
                         headers: {
                             Authorization: `${token}`,
@@ -31,47 +33,45 @@ const ideaAPI = {
                 throw new Error("Error creating idea", error);
             }
         },
-        updateIdea: async (ideaId) => {
+        updateIdea: async (ideaId, updateData) => {
             try {
-                const createIdeas = await axios.put(
-                    `${baseURL}/ideas/:${ideaId}`,
+                const updateIdeas = await axios.put(
+                    `${baseURL}/ideas/${ideaId}`,
+                    updateData,
                     {
                         headers: {
                             Authorization: `${token}`,
                         },
                     }
                 );
-                return createIdeas;
+                return updateIdeas;
             } catch (error) {
                 throw new Error("Error updating idea", error);
             }
         },
         getIdeaById: async (ideaId) => {
             try {
-                const createIdeas = await axios.get(
-                    `${baseURL}/ideas/:${ideaId}`,
-                    {
-                        headers: {
-                            Authorization: `${token}`,
-                        },
-                    }
-                );
-                return createIdeas;
+                const idea = await axios.get(`${baseURL}/ideas/${ideaId}`, {
+                    headers: {
+                        Authorization: `${token}`,
+                    },
+                });
+                return idea;
             } catch (error) {
                 throw new Error("Error getting idea", error);
             }
         },
         deleteIdea: async (ideaId) => {
             try {
-                const createIdeas = await axios.delete(
-                    `${baseURL}/ideas/:${ideaId}`,
+                const deleteIdeas = await axios.delete(
+                    `${baseURL}/ideas/${ideaId}`,
                     {
                         headers: {
                             Authorization: `${token}`,
                         },
                     }
                 );
-                return createIdeas;
+                return deleteIdeas;
             } catch (error) {
                 throw new Error("Error deleting idea", error);
             }

@@ -1,13 +1,24 @@
 import { Link } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ideaAPI from "../../utils/ideaAPI";
-import { useState, useEffect } from "react";
-const IdeaNotes = ({ ideas }) => {
+import CreatingIdeaModal from "../components/CreatingIdeaModal";
+
+import { useState } from "react";
+
+const IdeaNotes = ({ ideas, fetchIdeas, handleEdit }) => {
+    const [selectedIdea, setSelectedIdea] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const truncateDescription = (description) => {
         if (description.length > 30) {
             return description.substring(0, 30) + "...";
         }
         return description;
+    };
+
+    const handleEditIdea = (idea) => {
+        setSelectedIdea(idea);
+        setIsModalOpen(true);
     };
 
     return (
@@ -41,10 +52,19 @@ const IdeaNotes = ({ ideas }) => {
                         <BsThreeDotsVertical
                             fontSize={18}
                             className="text-slate-500"
+                            onClick={() => handleEditIdea(idea)}
                         />
                     </Link>
                 </div>
             ))}
+            {isModalOpen && (
+                <CreatingIdeaModal
+                    isOpen={isModalOpen}
+                    onOpenChange={setIsModalOpen}
+                    selectedIdea={selectedIdea}
+                    handleEdit={handleEdit}
+                />
+            )}
         </div>
     );
 };

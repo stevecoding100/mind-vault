@@ -1,11 +1,18 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
-const Activity = ({ ideaData }) => {
+
+const Activity = ({ ideaData, onOpenChange, setSelectedIdea }) => {
     const truncateDescription = (description) => {
         if (description.length > 15) {
             return description.substring(0, 15) + "...";
         }
         return description;
+    };
+
+    // Add a click handler to each idea item
+    const handleIdeaClick = (idea) => {
+        setSelectedIdea(idea); // Set the selected idea in state
+        onOpenChange(true); // Open the modal
     };
 
     // Filter ideas to include only those with category "complete"
@@ -21,6 +28,7 @@ const Activity = ({ ideaData }) => {
                 <div
                     key={idea.key}
                     className="flex justify-between items-center py-3 px-3 w-full bg-blue-100 border-b-2 border-slate-300 mb-4 rounded-md shadow-sm"
+                    onClick={() => handleIdeaClick(idea)}
                 >
                     <h5 className="font-semibold text-slate-700">
                         {truncateDescription(idea.title)}

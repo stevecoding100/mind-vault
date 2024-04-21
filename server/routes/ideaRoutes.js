@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/ideas", userController.isLoggedIn, ideaController.getAllIdeas);
 
 // Route to create a new idea
-router.post("/ideas/:userId", ideaController.createIdea);
+router.post("/ideas/:userID", ideaController.createIdea);
 
 // Route to update an existing idea
 router.put("/ideas/:ideaId", ideaController.updateIdea);
