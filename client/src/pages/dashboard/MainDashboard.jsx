@@ -39,7 +39,7 @@ const MainDashboard = () => {
             // Add the newly created idea to the state
             setIdeas([createdIdea.data, ...ideas]);
 
-            // Close the modal
+            // // Close the modal
             onOpenChange(false);
         } catch (error) {
             setError(error.message);
@@ -50,7 +50,7 @@ const MainDashboard = () => {
         try {
             await ideaAPI.idea.updateIdea(ideaId, updatedIdea);
             fetchIdeas(); // Fetch the updated list of ideas
-            onOpenChange(false); // Close the modal
+            // onOpenChange(false); // Close the modal
         } catch (error) {
             setError("Error updating idea");
         }
@@ -76,6 +76,7 @@ const MainDashboard = () => {
                     ideaData={ideas}
                     fetchIdeas={fetchIdeas}
                     handleEdit={handleEdit}
+                    onOpenChange={onOpenChange}
                 />
             </div>
             <div className="w-[430px]">

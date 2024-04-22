@@ -5,9 +5,9 @@ import CreatingIdeaModal from "../components/CreatingIdeaModal";
 
 import { useState } from "react";
 
-const IdeaNotes = ({ ideas, fetchIdeas, handleEdit }) => {
-    const [selectedIdea, setSelectedIdea] = useState(null);
+const IdeaNotes = ({ ideas, handleEdit, onOpenChange }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedIdea, setSelectedIdea] = useState(null);
 
     const truncateDescription = (description) => {
         if (description.length > 30) {

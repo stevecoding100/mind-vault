@@ -13,7 +13,6 @@ export default function CreatingIdeaModal({
     isOpen,
     onOpenChange,
     onCreateIdea,
-    fetchIdeas,
     handleEdit,
     selectedIdea,
 }) {
