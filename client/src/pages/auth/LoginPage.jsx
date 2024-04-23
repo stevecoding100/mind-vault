@@ -7,7 +7,6 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    // const BASEURL = "https://zenkaianime-ecommerce.onrender.com/";
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {

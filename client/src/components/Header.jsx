@@ -1,6 +1,6 @@
 import IdeaNotes from "./IdeaNotes";
 
-const Header = ({ ideaData, handleEdit, onOpenChange }) => {
+const Header = ({ ideaData, handleEdit, onOpenChange, handleDelete }) => {
     return (
         <div className="w-full p-8">
             <h1 className="text-2xl font-bold text-slate-700 p-2">
@@ -11,6 +11,7 @@ const Header = ({ ideaData, handleEdit, onOpenChange }) => {
                     ideas={ideaData}
                     handleEdit={handleEdit}
                     onOpenChange={onOpenChange}
+                    handleDelete={handleDelete}
                 />
             </div>
         </div>

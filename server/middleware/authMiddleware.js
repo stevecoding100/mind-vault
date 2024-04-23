@@ -22,7 +22,7 @@ const authMiddleware = {
             throw error;
         }
         const token = jwt.sign({ id: user.user_id }, JWT);
-        return { token, userId: user.user_id };
+        return { token, userId: user.user_id, user };
     },
     findUserWithToken: async (token) => {
         try {

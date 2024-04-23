@@ -12,7 +12,12 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { useDisclosure } from "@nextui-org/react";
 import CreatingIdeaModal from "./CreatingIdeaModal";
-const SideMenu = ({ onOpen }) => {
+
+import { useNavigate } from "react-router-dom";
+
+const SideMenu = ({ onOpen, toggleSearchInput }) => {
+    const name = localStorage.getItem("name");
+    const userName = localStorage.getItem("userName");
     const navLinks = [
         {
             icon: AiOutlineSearch,
@@ -30,31 +35,43 @@ const SideMenu = ({ onOpen }) => {
             to: "#",
         },
     ];
-    const ideas = [
-        {
-            title: "AI Automation",
-            description: "Lorem Ipsum manie james jiole",
-            category: "In Progress",
-        },
-        {
-            title: "Car AI New Tech",
-            description: "Lorem Ipsum manie james jiole",
-            category: "Complete",
-        },
-        {
-            title: "Prime Juicer AI",
-            description: "Lorem Ipsum manie james jiole",
-            category: "Complete",
-        },
-        {
-            title: "Alexa 2.0 AI Prime",
-            description: "Lorem Ipsum manie james jiole",
-            category: "In Progress",
-        },
-    ];
+    const navigate = useNavigate();
+    const handleSignOut = () => {
+        // Clear user authentication data from local storage
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("name");
+        localStorage.removeItem("userName");
+
+        // Redirect to the sign-in page or any other desired route
+        navigate("/login");
+    };
+
+    // const ideas = [
+    //     {
+    //         title: "AI Automation",
+    //         description: "Lorem Ipsum manie james jiole",
+    //         category: "In Progress",
+    //     },
+    //     {
+    //         title: "Car AI New Tech",
+    //         description: "Lorem Ipsum manie james jiole",
+    //         category: "Complete",
+    //     },
+    //     {
+    //         title: "Prime Juicer AI",
+    //         description: "Lorem Ipsum manie james jiole",
+    //         category: "Complete",
+    //     },
+    //     {
+    //         title: "Alexa 2.0 AI Prime",
+    //         description: "Lorem Ipsum manie james jiole",
+    //         category: "In Progress",
+    //     },
+    // ];
     return (
         <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-4 pt-4 border-r-2 border-slate-300 shadow-md">
-            <div className="flex justify-between w-full h-30 border-b-2 border-slate-300 pb-4">
+            <div className="flex  w-full h-30 border-b-2 border-slate-300 pb-4">
                 <Link to="#">
                     <img
                         src="https://www.next.us/nxtcms/resource/blob/5791594/0b81a7d7db30a12f5494cbc97b53c573/knitwear-data.jpg"
@@ -62,9 +79,9 @@ const SideMenu = ({ onOpen }) => {
                         className="w-10 h-10 rounded-full border-1 border-white"
                     />
                 </Link>
-                <div className="text-sm">
-                    <p className="text-slate-900 font-bold">Nick Woods</p>
-                    <p className="text-slate-700">nick.woods@gmail.com</p>
+                <div className=" ml-4">
+                    <p className="text-slate-900 font-bold text-lg">{name}</p>
+                    <p className="text-slate-700 text-sm">{userName}</p>
                 </div>
             </div>
             <div className="pt-4 flex flex-col border-b-2 border-slate-300 h-80">
@@ -75,19 +92,16 @@ const SideMenu = ({ onOpen }) => {
                     + New Idea
                 </button>
                 <div className="pt-6">
-                    {navLinks.map((link) => (
-                        <Link
-                            to={link.to}
-                            key={link.key}
-                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
-                        >
-                            <link.icon
-                                className="mr-3 group-hover text-slate-400 "
-                                fontSize={18}
-                            />
-                            {link.name}
-                        </Link>
-                    ))}
+                    <button
+                        onClick={toggleSearchInput} // Toggle search input visibility
+                        className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                    >
+                        <AiOutlineSearch
+                            className="mr-3 group-hover text-slate-400"
+                            fontSize={18}
+                        />
+                        Search
+                    </button>
                 </div>
             </div>
             <div className="flex flex-col items-center p-2">
@@ -104,7 +118,7 @@ const SideMenu = ({ onOpen }) => {
                         fontSize={18}
                     />
                 </div>
-                <div className="pt-6 flex text-sm flex-col w-full p-2 text-slate-800 h-[50vh] overflow-y-scroll">
+                {/* <div className="pt-6 flex text-sm flex-col w-full p-2 text-slate-800 h-[50vh] overflow-y-scroll">
                     {ideas.map((item) => (
                         <div
                             key={item.key}
@@ -113,23 +127,24 @@ const SideMenu = ({ onOpen }) => {
                             <Link className="">{item.title}</Link>
                         </div>
                     ))}
-                </div>
+                </div> */}
             </div>
             <div className="flex flex-col mt-16 p-2">
-                <Link className="flex items-center mb-2 font-medium text-slate-500">
+                <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
                     <CgSupport className="mr-2" /> Support
                 </Link>
-                <Link className="flex items-center mb-2 font-medium text-slate-500">
+                <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
                     <GrCircleInformation className="mr-2" /> About
                 </Link>
-                <Link className="flex items-center mb-2 font-medium text-slate-500">
+                <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
                     <BsBook className="mr-2" /> Privacy Policy
                 </Link>
-                <Link to="#">
-                    <button className="py-3 px-4 mt-4 bg-blue-200 rounded-md tracking-wide font-bold text-slate-600 hover:bg-red-500 hover:text-slate-100 ">
-                        Sign Out
-                    </button>
-                </Link>
+                <button
+                    onClick={handleSignOut}
+                    className="py-3 px-4 mt-4 bg-blue-200 rounded-md tracking-wide font-bold text-slate-600 hover:bg-red-500 hover:text-slate-100 "
+                >
+                    Sign Out
+                </button>
             </div>
         </div>
     );

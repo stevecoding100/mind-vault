@@ -5,7 +5,7 @@ import CreatingIdeaModal from "../components/CreatingIdeaModal";
 
 import { useState } from "react";
 
-const IdeaNotes = ({ ideas, handleEdit, onOpenChange }) => {
+const IdeaNotes = ({ ideas, handleEdit, handleDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
 
@@ -63,6 +63,7 @@ const IdeaNotes = ({ ideas, handleEdit, onOpenChange }) => {
                     onOpenChange={setIsModalOpen}
                     selectedIdea={selectedIdea}
                     handleEdit={handleEdit}
+                    handleDelete={handleDelete}
                 />
             )}
         </div>

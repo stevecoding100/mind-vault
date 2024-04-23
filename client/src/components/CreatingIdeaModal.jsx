@@ -15,13 +15,12 @@ export default function CreatingIdeaModal({
     onCreateIdea,
     handleEdit,
     selectedIdea,
+    handleDelete,
 }) {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
-
-    console.log("Line 25: ", selectedIdea);
 
     useEffect(() => {
         if (selectedIdea) {
@@ -56,6 +55,16 @@ export default function CreatingIdeaModal({
         }
     };
 
+    const handleDeleteClick = async () => {
+        try {
+            if (selectedIdea) {
+                await handleDelete(selectedIdea.idea_id);
+                handleCloseModal(); // Close the modal after deleting
+            }
+        } catch (error) {
+            setError("Error deleting idea");
+        }
+    };
     return (
         <>
             <Modal
@@ -125,13 +134,15 @@ export default function CreatingIdeaModal({
                                 ></textarea>
                             </ModalBody>
                             <ModalFooter>
-                                <Button
-                                    color="danger"
-                                    variant="light"
-                                    onPress={onClose}
-                                >
-                                    Close
-                                </Button>
+                                {selectedIdea && (
+                                    <Button
+                                        color="danger"
+                                        variant="light"
+                                        onClick={handleDeleteClick}
+                                    >
+                                        Delete
+                                    </Button>
+                                )}
 
                                 <Button color="primary" onClick={handleSubmit}>
                                     {selectedIdea ? "Edit" : "Create"}
