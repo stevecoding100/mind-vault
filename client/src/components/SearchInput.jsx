@@ -1,35 +1,18 @@
-import { Input } from "@nextui-org/react";
-import { SearchIcon } from "./SearchIcon";
+import { AiOutlineSearch } from "react-icons/ai";
 
-export default function SearchInput() {
+const SearchInput = ({ value, handleSearchChange }) => {
     return (
-        <div className="w-full h-[200px] px-8 rounded-2xl  flex justify-center items-center  text-white">
-            <Input
-                // label="Search"
-                isClearable
-                radius="lg"
-                classNames={{
-                    label: "text-black/50 dark:text-white/90",
-                    input: [
-                        "bg-white",
-                        "text-black/90 dark:text-white/90",
-                        "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                    ],
-                    innerWrapper: "bg-white",
-                    inputWrapper: [
-                        "shadow-xl",
-                        "bg-white",
-                        "dark:bg-default/60",
-                        "backdrop-blur-xl",
-                        "backdrop-saturate-200",
-                        "!cursor-text",
-                    ],
-                }}
-                placeholder="Search Ideas..."
-                startContent={
-                    <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
-                }
+        <div className="relative">
+            <input
+                type="text"
+                value={value}
+                onChange={handleSearchChange}
+                placeholder="Search ideas..."
+                className="border border-gray-300 rounded-md p-3 w-full mb-4"
             />
+            <AiOutlineSearch className="absolute right-4 top-4 text-gray-400" />
         </div>
     );
-}
+};
+
+export default SearchInput;

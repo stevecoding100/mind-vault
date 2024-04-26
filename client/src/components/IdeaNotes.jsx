@@ -4,6 +4,7 @@ import ideaAPI from "../../utils/ideaAPI";
 import CreatingIdeaModal from "../components/CreatingIdeaModal";
 
 import { useState } from "react";
+import SearchInput from "./SearchInput";
 
 const IdeaNotes = ({
     ideas,
@@ -11,9 +12,13 @@ const IdeaNotes = ({
     handleDelete,
     inProgressIdeas,
     displayAllIdeas,
+    searchVisible,
+    filterIdeas,
+    filteredIdeas,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const truncateDescription = (description) => {
         if (description.length > 30) {
@@ -27,15 +32,28 @@ const IdeaNotes = ({
         setIsModalOpen(true);
     };
 
-    // Determine which set of ideas to display based on inProgressIdeas
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        filterIdeas(query);
+    };
+
+    // Determine which set of ideas to display based on  displayAllIdeas prop
     const ideasToMap = displayAllIdeas ? ideas : inProgressIdeas;
+    const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap;
     return (
         <div className="w-full h-[85vh] overflow-y-scroll p-2">
             <h3 className="text-xl font-semibold text-slate-600 mb-4 ml-2">
                 My Ideas
             </h3>
 
-            {ideasToMap.map((idea) => (
+            {searchVisible && (
+                <SearchInput
+                    value={searchQuery}
+                    handleSearchChange={handleSearchChange}
+                />
+            )}
+            {ideasToDisplay.map((idea) => (
                 <div
                     key={idea.key}
                     className="flex w-full  shadow-md justify-between items-center bg-slate-100 mb-4 text-slate-900 rounded-md py-4 px-4 overflow-x-scroll"

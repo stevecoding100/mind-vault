@@ -15,6 +15,7 @@ const MainDashboard = () => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
+    const [filteredIdeas, setFilteredIdeas] = useState([]);
 
     // Getting all ideas
     const fetchIdeas = async () => {
@@ -102,6 +103,13 @@ const MainDashboard = () => {
         setInProgressIdeas(filteredIdeas);
     };
 
+    const filterIdeas = (query) => {
+        const filtered = ideas.filter((idea) =>
+            idea.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredIdeas(filtered);
+    };
+
     if (error) {
         return <div>Error: {error}</div>; // Display an error message
     }
@@ -115,7 +123,6 @@ const MainDashboard = () => {
                 setDisplayAllIdeas={setDisplayAllIdeas}
             />
             <div className="flex flex-col w-full">
-                {searchVisible && <SearchInput />}
                 <CreatingIdeaModal
                     isOpen={isOpen}
                     onOpenChange={onOpenChange}
@@ -133,6 +140,9 @@ const MainDashboard = () => {
                     handleDelete={handleDelete}
                     inProgressIdeas={inProgressIdeas}
                     displayAllIdeas={displayAllIdeas}
+                    searchVisible={searchVisible}
+                    filterIdeas={filterIdeas}
+                    filteredIdeas={filteredIdeas}
                 />
             </div>
             <div className="w-[430px]">

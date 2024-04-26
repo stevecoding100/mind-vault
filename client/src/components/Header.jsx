@@ -7,6 +7,9 @@ const Header = ({
     handleDelete,
     inProgressIdeas,
     displayAllIdeas,
+    searchVisible,
+    filterIdeas,
+    filteredIdeas,
 }) => {
     return (
         <div className="w-full p-8">
@@ -21,6 +24,9 @@ const Header = ({
                     handleDelete={handleDelete}
                     inProgressIdeas={inProgressIdeas}
                     displayAllIdeas={displayAllIdeas}
+                    searchVisible={searchVisible}
+                    filterIdeas={filterIdeas}
+                    filteredIdeas={filteredIdeas}
                 />
             </div>
         </div>
