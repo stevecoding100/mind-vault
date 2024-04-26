@@ -5,7 +5,13 @@ import CreatingIdeaModal from "../components/CreatingIdeaModal";
 
 import { useState } from "react";
 
-const IdeaNotes = ({ ideas, handleEdit, handleDelete }) => {
+const IdeaNotes = ({
+    ideas,
+    handleEdit,
+    handleDelete,
+    inProgressIdeas,
+    displayAllIdeas,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
 
@@ -21,12 +27,15 @@ const IdeaNotes = ({ ideas, handleEdit, handleDelete }) => {
         setIsModalOpen(true);
     };
 
+    // Determine which set of ideas to display based on inProgressIdeas
+    const ideasToMap = displayAllIdeas ? ideas : inProgressIdeas;
     return (
         <div className="w-full h-[85vh] overflow-y-scroll p-2">
             <h3 className="text-xl font-semibold text-slate-600 mb-4 ml-2">
                 My Ideas
             </h3>
-            {ideas.map((idea) => (
+
+            {ideasToMap.map((idea) => (
                 <div
                     key={idea.key}
                     className="flex w-full  shadow-md justify-between items-center bg-slate-100 mb-4 text-slate-900 rounded-md py-4 px-4 overflow-x-scroll"

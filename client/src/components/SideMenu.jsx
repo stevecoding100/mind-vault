@@ -12,29 +12,20 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { useDisclosure } from "@nextui-org/react";
 import CreatingIdeaModal from "./CreatingIdeaModal";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-const SideMenu = ({ onOpen, toggleSearchInput }) => {
+const SideMenu = ({
+    onOpen,
+    toggleSearchInput,
+    showInProgressIdeas,
+    setDisplayAllIdeas,
+}) => {
     const name = localStorage.getItem("name");
     const userName = localStorage.getItem("userName");
-    const navLinks = [
-        {
-            icon: AiOutlineSearch,
-            name: "Search",
-            to: "#",
-        },
-        {
-            icon: BiHome,
-            name: "Home",
-            to: "#",
-        },
-        {
-            icon: GrInProgress,
-            name: "Inprogress",
-            to: "#",
-        },
-    ];
+    const [displayAll, setDisplayAll] = useState(true);
+
     const navigate = useNavigate();
     const handleSignOut = () => {
         // Clear user authentication data from local storage
@@ -46,29 +37,17 @@ const SideMenu = ({ onOpen, toggleSearchInput }) => {
         // Redirect to the sign-in page or any other desired route
         navigate("/login");
     };
+    const handleDisplayAllIdeas = () => {
+        setDisplayAll(true);
+        setDisplayAllIdeas(true);
+    };
 
-    // const ideas = [
-    //     {
-    //         title: "AI Automation",
-    //         description: "Lorem Ipsum manie james jiole",
-    //         category: "In Progress",
-    //     },
-    //     {
-    //         title: "Car AI New Tech",
-    //         description: "Lorem Ipsum manie james jiole",
-    //         category: "Complete",
-    //     },
-    //     {
-    //         title: "Prime Juicer AI",
-    //         description: "Lorem Ipsum manie james jiole",
-    //         category: "Complete",
-    //     },
-    //     {
-    //         title: "Alexa 2.0 AI Prime",
-    //         description: "Lorem Ipsum manie james jiole",
-    //         category: "In Progress",
-    //     },
-    // ];
+    const handleDisplayInProgressIdeas = () => {
+        setDisplayAll(false);
+        setDisplayAllIdeas(false);
+        showInProgressIdeas();
+    };
+
     return (
         <div className="min-h-screen w-[250px] bg-slate-100 flex flex-col  p-4 pt-4 border-r-2 border-slate-300 shadow-md">
             <div className="flex  w-full h-30 border-b-2 border-slate-300 pb-4">
@@ -93,6 +72,16 @@ const SideMenu = ({ onOpen, toggleSearchInput }) => {
                 </button>
                 <div className="pt-6">
                     <button
+                        onClick={handleDisplayAllIdeas}
+                        className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                    >
+                        <BiHome
+                            className="mr-3 group-hover text-slate-400"
+                            fontSize={18}
+                        />
+                        Home
+                    </button>
+                    <button
                         onClick={toggleSearchInput} // Toggle search input visibility
                         className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
                     >
@@ -101,6 +90,16 @@ const SideMenu = ({ onOpen, toggleSearchInput }) => {
                             fontSize={18}
                         />
                         Search
+                    </button>
+                    <button
+                        onClick={handleDisplayInProgressIdeas}
+                        className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                    >
+                        <GrInProgress
+                            className="mr-3 group-hover text-slate-400"
+                            fontSize={18}
+                        />
+                        In Progress
                     </button>
                 </div>
             </div>

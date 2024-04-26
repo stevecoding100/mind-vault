@@ -13,6 +13,8 @@ const MainDashboard = () => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdea, setSelectedIdea] = useState(null);
     const [searchVisible, setSearchVisible] = useState(false);
+    const [inProgressIdeas, setInProgressIdeas] = useState(null);
+    const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
 
     // Getting all ideas
     const fetchIdeas = async () => {
@@ -92,13 +94,26 @@ const MainDashboard = () => {
         setSearchVisible(!searchVisible);
     };
 
+    // Display on "In Porgress" Ideas
+    const showInProgressIdeas = () => {
+        const filteredIdeas = ideas.filter(
+            (idea) => idea.category === "In Progress"
+        );
+        setInProgressIdeas(filteredIdeas);
+    };
+
     if (error) {
         return <div>Error: {error}</div>; // Display an error message
     }
 
     return (
         <div className="flex bg-blue-100">
-            <SideMenu onOpen={onOpen} toggleSearchInput={toggleSearchInput} />
+            <SideMenu
+                onOpen={onOpen}
+                toggleSearchInput={toggleSearchInput}
+                showInProgressIdeas={showInProgressIdeas}
+                setDisplayAllIdeas={setDisplayAllIdeas}
+            />
             <div className="flex flex-col w-full">
                 {searchVisible && <SearchInput />}
                 <CreatingIdeaModal
@@ -116,6 +131,8 @@ const MainDashboard = () => {
                     handleEdit={handleEdit}
                     onOpenChange={onOpenChange}
                     handleDelete={handleDelete}
+                    inProgressIdeas={inProgressIdeas}
+                    displayAllIdeas={displayAllIdeas}
                 />
             </div>
             <div className="w-[430px]">
