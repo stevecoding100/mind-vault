@@ -53,7 +53,7 @@ const SideMenu = ({
             <div className="flex  w-full h-30 border-b-2 border-slate-300 pb-4">
                 <Link to="#">
                     <img
-                        src="https://www.next.us/nxtcms/resource/blob/5791594/0b81a7d7db30a12f5494cbc97b53c573/knitwear-data.jpg"
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
                         alt="profile avatar"
                         className="w-10 h-10 rounded-full border-1 border-white"
                     />
