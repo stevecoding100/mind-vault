@@ -129,7 +129,7 @@ const MainDashboard = () => {
                 name={name}
                 userName={userName}
             />
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full hidden md:block">
                 <CreatingIdeaModal
                     isOpen={isOpen}
                     onOpenChange={onOpenChange}
@@ -153,7 +153,7 @@ const MainDashboard = () => {
                     name={name}
                 />
             </div>
-            <div className="w-[430px]">
+            <div className="w-[430px] hidden md:block">
                 <Activity
                     ideaData={ideas}
                     onOpenChange={onOpenChange}
