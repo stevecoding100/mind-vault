@@ -3,10 +3,10 @@
 const { client } = require("../database/db");
 const uuid = require("uuid");
 const ideaModel = {
-    getAllIdeas: async () => {
+    getAllIdeas: async (userId) => {
         try {
-            const SQL = `SELECT * FROM ideas`;
-            const { rows } = await client.query(SQL);
+            const SQL = `SELECT * FROM ideas WHERE user_id = $1`;
+            const { rows } = await client.query(SQL, [userId]);
             return rows;
         } catch (error) {
             console.error("Error fetching ideas: ", error);

@@ -10,11 +10,15 @@ const Header = ({
     searchVisible,
     filterIdeas,
     filteredIdeas,
+    name,
 }) => {
+    const token = localStorage.getItem("token");
+    const isLoggedIn = !!token;
+
     return (
         <div className="w-full p-8">
             <h1 className="text-2xl font-bold text-slate-700 p-2">
-                Welcome Back, Nick!
+                {`Welcome Back, ${name}`}
             </h1>
             <div className="mt-16">
                 <IdeaNotes
@@ -27,6 +31,7 @@ const Header = ({
                     searchVisible={searchVisible}
                     filterIdeas={filterIdeas}
                     filteredIdeas={filteredIdeas}
+                    isLoggedIn={isLoggedIn}
                 />
             </div>
         </div>

@@ -2,7 +2,8 @@
 
 const userModel = require("../models/user");
 const authMiddleware = require("../middleware/authMiddleware");
-
+const JWT = process.env.JWT;
+const jwt = require("jsonwebtoken");
 const userController = {
     getAllUsers: async (req, res) => {
         try {
@@ -16,13 +17,24 @@ const userController = {
     createUser: async (req, res) => {
         try {
             const { name, username, email, password } = req.body;
+
             const newUser = await userModel.createUser(
                 name,
                 username,
                 email,
                 password
             );
-            res.status(201).json(newUser);
+            // Generate JWT token
+            const token = jwt.sign({ userId: newUser.user_id }, JWT);
+
+            // Respond with token and user data
+            res.status(201).json({
+                token,
+                userId: newUser.user_id,
+                name: newUser.name,
+                username: newUser.username,
+                email: newUser.email,
+            });
         } catch (error) {
             console.error("Error creating user: ", error);
             res.status(500).json({ message: "Internal server error" });

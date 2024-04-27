@@ -15,6 +15,7 @@ const IdeaNotes = ({
     searchVisible,
     filterIdeas,
     filteredIdeas,
+    isLoggedIn,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
@@ -40,12 +41,20 @@ const IdeaNotes = ({
 
     // Determine which set of ideas to display based on  displayAllIdeas prop
     const ideasToMap = displayAllIdeas ? ideas : inProgressIdeas;
-    const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap;
+    const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap; // Check if the user is logged in and has no ideas attached to their account
+    const hasNoIdeas = isLoggedIn && ideas.length === 0;
+
     return (
         <div className="w-full h-[85vh] overflow-y-scroll p-2">
             <h3 className="text-xl font-semibold text-slate-600 mb-4 ml-2">
                 My Ideas
             </h3>
+
+            {hasNoIdeas && (
+                <p className="text-center text-xl font-bold text-slate-600 mt-20">
+                    Create a new idea
+                </p>
+            )}
 
             {searchVisible && (
                 <SearchInput

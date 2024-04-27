@@ -1,18 +1,19 @@
 import axios from "axios";
 const baseURL = import.meta.env.VITE_API_URL;
 const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
+
 const ideaAPI = {
     idea: {
-        getAllIdeas: async () => {
+        getAllIdeas: async (userId) => {
             try {
-                const ideas = await axios.get(`${baseURL}/ideas`, {
+                const ideas = await axios.get(`${baseURL}/ideas/${userId}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `${token}`,
                     },
                 });
-                return ideas;
+
+                return ideas.data;
             } catch (error) {
                 throw new Error("Error getting ideas", error);
             }
@@ -28,6 +29,7 @@ const ideaAPI = {
                         },
                     }
                 );
+                console.log("Line 32: ", createIdeas);
                 return createIdeas;
             } catch (error) {
                 throw new Error("Error creating idea", error);

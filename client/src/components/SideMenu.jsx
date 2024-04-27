@@ -21,9 +21,9 @@ const SideMenu = ({
     toggleSearchInput,
     showInProgressIdeas,
     setDisplayAllIdeas,
+    name,
+    userName,
 }) => {
-    const name = localStorage.getItem("name");
-    const userName = localStorage.getItem("userName");
     const [displayAll, setDisplayAll] = useState(true);
 
     const navigate = useNavigate();

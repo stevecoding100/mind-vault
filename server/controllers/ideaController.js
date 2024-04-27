@@ -4,8 +4,10 @@ const ideaModel = require("../models/idea");
 
 const ideaController = {
     getAllIdeas: async (req, res) => {
+        const { userId } = req.params;
         try {
-            const ideas = await ideaModel.getAllIdeas();
+            const ideas = await ideaModel.getAllIdeas(userId);
+
             res.json(ideas);
         } catch (error) {
             console.error("Error fetching ideas:", error);
@@ -22,6 +24,7 @@ const ideaController = {
                 category,
                 userId
             );
+
             res.status(201).json(newIdea);
         } catch (error) {
             console.error("Error creating idea:", error);

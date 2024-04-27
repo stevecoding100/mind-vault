@@ -16,13 +16,18 @@ const MainDashboard = () => {
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
     const [filteredIdeas, setFilteredIdeas] = useState([]);
+    const [name, setName] = useState(localStorage.getItem("name") || "");
+    const [userName, setUserName] = useState(
+        localStorage.getItem("userName") || ""
+    );
+    const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
 
     // Getting all ideas
     const fetchIdeas = async () => {
         try {
-            const userIdeas = await ideaAPI.idea.getAllIdeas();
-            setIdeas(userIdeas.data);
-            console.log(userIdeas.data);
+            const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
+            setIdeas(userIdeas);
+            console.log("Ideas: ", userIdeas);
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -31,7 +36,7 @@ const MainDashboard = () => {
 
     useEffect(() => {
         fetchIdeas();
-    }, []);
+    }, [userId]);
 
     // Creating an Idea
     const handleCreateIdea = async (newIdea) => {
@@ -121,6 +126,8 @@ const MainDashboard = () => {
                 toggleSearchInput={toggleSearchInput}
                 showInProgressIdeas={showInProgressIdeas}
                 setDisplayAllIdeas={setDisplayAllIdeas}
+                name={name}
+                userName={userName}
             />
             <div className="flex flex-col w-full">
                 <CreatingIdeaModal
@@ -143,6 +150,7 @@ const MainDashboard = () => {
                     searchVisible={searchVisible}
                     filterIdeas={filterIdeas}
                     filteredIdeas={filteredIdeas}
+                    name={name}
                 />
             </div>
             <div className="w-[430px]">
