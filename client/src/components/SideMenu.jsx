@@ -13,20 +13,17 @@ import { BsArrowRightCircle } from "react-icons/bs";
 import { useDisclosure } from "@nextui-org/react";
 import CreatingIdeaModal from "./CreatingIdeaModal";
 import { useState } from "react";
-import { IoMenu } from "react-icons/io5";
-import { LuBrainCircuit } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import MobileSideMenu from "./smallScreens/MobileSideMenu";
 
 const SideMenu = ({
     onOpen,
     toggleSearchInput,
-    showInProgressIdeas,
-    setDisplayAllIdeas,
     name,
     userName,
+    handleDisplayAllIdeas,
+    handleDisplayInProgressIdeas,
 }) => {
-    const [displayAll, setDisplayAll] = useState(true);
-
     const navigate = useNavigate();
     const handleSignOut = () => {
         // Clear user authentication data from local storage
@@ -36,22 +33,13 @@ const SideMenu = ({
         localStorage.removeItem("userName");
 
         // Redirect to the sign-in page or any other desired route
-        navigate("/login");
-    };
-    const handleDisplayAllIdeas = () => {
-        setDisplayAll(true);
-        setDisplayAllIdeas(true);
-    };
-
-    const handleDisplayInProgressIdeas = () => {
-        setDisplayAll(false);
-        setDisplayAllIdeas(false);
-        showInProgressIdeas();
+        navigate("/");
     };
 
     return (
         <>
-            <div className="min-h-screen  w-[250px]  bg-slate-100 flex flex-col p-4 pt-4 border-r-2 border-slate-300 shadow-md hidden md:block">
+            {/* Large Screens */}
+            <div className="min-h-screen  w-[250px] bg-slate-100 flex flex-col p-4 pt-4 border-r-2 border-slate-300 shadow-md hidden md:block">
                 <div className="flex  w-full h-30 border-b-2 border-slate-300 pb-4">
                     <Link to="#">
                         <img
@@ -150,15 +138,12 @@ const SideMenu = ({
                     </button>
                 </div>
             </div>
-            <div className="w-full h-[80px] flex justify-between items-center p-6 md:hidden">
-                <div>
-                    <IoMenu size={40} />
-                </div>
-                <div className="flex items-center">
-                    <LuBrainCircuit size={20} />
-                    <h5 className="font-bold text-xl ml-2">MindVault</h5>
-                </div>
-            </div>
+            {/* Small Screens */}
+            <MobileSideMenu
+                name={name}
+                userName={userName}
+                handleSignOut={handleSignOut}
+            />
         </>
     );
 };

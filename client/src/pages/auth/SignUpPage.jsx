@@ -21,7 +21,7 @@ const SignUpPage = () => {
             });
             if (result.status === 201) {
                 console.log("User registered", result);
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 throw new Error(result.response.data.error);
             }
@@ -126,7 +126,7 @@ const SignUpPage = () => {
                                     <span className="text-gray-600">
                                         Already a user to MindVault?
                                     </span>
-                                    <Link to="/login"> Sign In</Link>
+                                    <Link to="/"> Sign In</Link>
                                 </p>
                             </form>
                         </div>

@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import CreatingIdeaModal from "../../components/CreatingIdeaModal";
 import { useDisclosure } from "@nextui-org/react";
 import SearchInput from "../../components/SearchInput";
+import MenuBar from "../../components/smallScreens/MenuBar";
+import MobileActivity from "../../components/smallScreens/MobileActivity";
+
 const MainDashboard = () => {
     const [ideas, setIdeas] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,13 +18,14 @@ const MainDashboard = () => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
+    const [displayAll, setDisplayAll] = useState(true);
     const [filteredIdeas, setFilteredIdeas] = useState([]);
     const [name, setName] = useState(localStorage.getItem("name") || "");
     const [userName, setUserName] = useState(
         localStorage.getItem("userName") || ""
     );
     const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
-
+    const [showRecent, setShowRecent] = useState(false);
     // Getting all ideas
     const fetchIdeas = async () => {
         try {
@@ -43,6 +47,7 @@ const MainDashboard = () => {
         try {
             // Create the new idea
             const createdIdea = await ideaAPI.idea.createIdea(
+                userId,
                 newIdea.title,
                 newIdea.description,
                 newIdea.category
@@ -115,52 +120,97 @@ const MainDashboard = () => {
         setFilteredIdeas(filtered);
     };
 
+    const handleDisplayAllIdeas = () => {
+        setDisplayAll(true);
+        setDisplayAllIdeas(true);
+    };
+
+    const handleDisplayInProgressIdeas = () => {
+        setDisplayAll(false);
+        setDisplayAllIdeas(false);
+        showInProgressIdeas();
+    };
+
+    // Handle Recent button click
+    const handleRecentClick = () => {
+        setShowRecent(true);
+    };
+
+    // Handle Home button click
+    const handleHomeClick = () => {
+        setShowRecent(false);
+    };
+
     if (error) {
         return <div>Error: {error}</div>; // Display an error message
     }
 
     return (
-        <div className="flex bg-blue-100">
-            <SideMenu
-                onOpen={onOpen}
-                toggleSearchInput={toggleSearchInput}
-                showInProgressIdeas={showInProgressIdeas}
-                setDisplayAllIdeas={setDisplayAllIdeas}
-                name={name}
-                userName={userName}
-            />
-            <div className="flex flex-col w-full hidden md:block">
-                <CreatingIdeaModal
-                    isOpen={isOpen}
-                    onOpenChange={onOpenChange}
-                    onCreateIdea={handleCreateIdea}
-                    fetchIdeas={fetchIdeas}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
-                    selectedIdea={selectedIdea}
-                />
-                <Header
-                    ideaData={ideas}
-                    fetchIdeas={fetchIdeas}
-                    handleEdit={handleEdit}
-                    onOpenChange={onOpenChange}
-                    handleDelete={handleDelete}
-                    inProgressIdeas={inProgressIdeas}
-                    displayAllIdeas={displayAllIdeas}
-                    searchVisible={searchVisible}
-                    filterIdeas={filterIdeas}
-                    filteredIdeas={filteredIdeas}
+        <>
+            <div className=" md:flex justify-between  bg-blue-100">
+                <SideMenu
+                    onOpen={onOpen}
+                    toggleSearchInput={toggleSearchInput}
+                    // showInProgressIdeas={showInProgressIdeas}
+                    // setDisplayAllIdeas={setDisplayAllIdeas}
                     name={name}
+                    userName={userName}
+                    handleDisplayAllIdeas={handleDisplayAllIdeas}
+                    handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                />
+
+                <div className="flex flex-col min-h-screen w-full md:w-[1280px]  md:block">
+                    <CreatingIdeaModal
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        onCreateIdea={handleCreateIdea}
+                        fetchIdeas={fetchIdeas}
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                        selectedIdea={selectedIdea}
+                    />
+                    {showRecent ? (
+                        <MobileActivity
+                            ideaData={ideas}
+                            onOpenChange={onOpenChange}
+                            setSelectedIdea={setSelectedIdea}
+                        />
+                    ) : (
+                        <Header
+                            ideaData={ideas}
+                            fetchIdeas={fetchIdeas}
+                            handleEdit={handleEdit}
+                            onOpenChange={onOpenChange}
+                            handleDelete={handleDelete}
+                            inProgressIdeas={inProgressIdeas}
+                            displayAllIdeas={displayAllIdeas}
+                            searchVisible={searchVisible}
+                            filterIdeas={filterIdeas}
+                            filteredIdeas={filteredIdeas}
+                            name={name}
+                        />
+                    )}
+                </div>
+
+                <div className="w-[400px] hidden md:block">
+                    <Activity
+                        ideaData={ideas}
+                        onOpenChange={onOpenChange}
+                        setSelectedIdea={setSelectedIdea}
+                    />
+                </div>
+            </div>
+            <div className="absolute md:hidden w-full">
+                <MenuBar
+                    onOpen={onOpen}
+                    handleDisplayAllIdeas={handleDisplayAllIdeas}
+                    handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                    toggleSearchInput={toggleSearchInput}
+                    handleRecentClick={handleRecentClick}
+                    handleHomeClick={handleHomeClick}
                 />
             </div>
-            <div className="w-[430px] hidden md:block">
-                <Activity
-                    ideaData={ideas}
-                    onOpenChange={onOpenChange}
-                    setSelectedIdea={setSelectedIdea}
-                />
-            </div>
-        </div>
+        </>
     );
 };
 

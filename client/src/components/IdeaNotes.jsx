@@ -45,13 +45,13 @@ const IdeaNotes = ({
     const hasNoIdeas = isLoggedIn && ideas.length === 0;
 
     return (
-        <div className="w-full h-[85vh] overflow-y-scroll p-2">
-            <h3 className="text-xl font-semibold text-slate-600 mb-4 ml-2">
+        <div className="h-[85vh] w-full overflow-y-scroll md:p-2 p-4">
+            <h3 className="text-md md:text-xl font-semibold text-slate-700 mb-4 ml-2">
                 My Ideas
             </h3>
 
             {hasNoIdeas && (
-                <p className="text-center text-xl font-bold text-slate-600 mt-20">
+                <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
                     Create a new idea
                 </p>
             )}
@@ -65,18 +65,18 @@ const IdeaNotes = ({
             {ideasToDisplay.map((idea) => (
                 <div
                     key={idea.key}
-                    className="flex w-full  shadow-md justify-between items-center bg-slate-100 mb-4 text-slate-900 rounded-md py-4 px-4 overflow-x-scroll"
+                    className="flex w-full shadow-md justify-between items-center bg-white mb-4 text-slate-900 rounded-md py-4 px-4 overflow-x-scroll"
                 >
                     <Link to="#">
-                        <h5 className="text-md mb-2 w-[400px] font-bold text-lg text-slate-800">
-                            {idea.title}
+                        <h5 className="text-md md:text-xl mb-2 w-[100px] md:w-[400px] font-bold  text-slate-800">
+                            {truncateDescription(idea.title)}
                         </h5>
-                        <p className="text-md text-slate-600">
+                        <p className=" text-sm md:text-md text-slate-600">
                             {truncateDescription(idea.description)}
                         </p>
                     </Link>
                     <p
-                        className={`font-semibold text-center w-[150px] ${
+                        className={`font-semibold text-center w-[150px] text-sm md:text-lg ${
                             idea.category === "Complete"
                                 ? "text-green-700"
                                 : "text-yellow-600"

@@ -20,7 +20,7 @@ const Activity = ({ ideaData, onOpenChange, setSelectedIdea }) => {
         (idea) => idea.category === "Complete"
     );
     return (
-        <div className=" h-full border-l-2  border-slate-300 bg-slate-100 shadow-md p-3">
+        <div className="h-full border-l-2 w-full border-slate-300 bg-slate-100 shadow-md p-3">
             <h3 className="text-xl font-semibold text-slate-700 mt-6 mb-6 p-2">
                 Completed Ideas
             </h3>

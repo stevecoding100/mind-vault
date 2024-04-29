@@ -16,7 +16,7 @@ const LoginPage = () => {
         console.log("User Info: ", result);
 
         if (result.status === 200) {
-            navigate("/");
+            navigate("/dashboard");
         } else {
             setError("Invalid username or password");
         }

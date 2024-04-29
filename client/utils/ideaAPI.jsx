@@ -18,7 +18,7 @@ const ideaAPI = {
                 throw new Error("Error getting ideas", error);
             }
         },
-        createIdea: async (title, description, category) => {
+        createIdea: async (userId, title, description, category) => {
             try {
                 const createIdeas = await axios.post(
                     `${baseURL}/ideas/${userId}`,

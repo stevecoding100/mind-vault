@@ -1,4 +1,5 @@
 import IdeaNotes from "./IdeaNotes";
+import MobileActivity from "./smallScreens/MobileActivity";
 
 const Header = ({
     ideaData,
@@ -16,8 +17,8 @@ const Header = ({
     const isLoggedIn = !!token;
 
     return (
-        <div className="w-full p-8">
-            <h1 className="text-2xl font-bold text-slate-700 p-2">
+        <div className="md:p-8  w-full">
+            <h1 className="text-xl md:text-2xl font-bold text-slate-800 mt-8 px-5 md:p-2">
                 {`Welcome Back, ${name}`}
             </h1>
             <div className="mt-16">
