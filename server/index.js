@@ -20,8 +20,6 @@ app.use(
 app.use("/api", ideaRoutes);
 app.use("/api/auth", userRoutes);
 
-// You can mount other routes here...
-
 const init = async () => {
     try {
         console.log("connecting to database");

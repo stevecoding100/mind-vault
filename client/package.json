@@ -11,8 +11,10 @@
         "host": "vite --host"
     },
     "dependencies": {
+        "@chatscope/chat-ui-kit-react": "^2.0.3",
         "@nextui-org/react": "^2.2.10",
         "axios": "^1.6.8",
+        "dotenv": "^16.4.5",
         "framer-motion": "^11.0.28",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
