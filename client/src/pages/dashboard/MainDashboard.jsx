@@ -8,6 +8,7 @@ import { useDisclosure } from "@nextui-org/react";
 import SearchInput from "../../components/SearchInput";
 import MenuBar from "../../components/smallScreens/MenuBar";
 import MobileActivity from "../../components/smallScreens/MobileActivity";
+import AIChat from "../../components/AIChat";
 
 const MainDashboard = () => {
     const [ideas, setIdeas] = useState([]);
@@ -26,6 +27,8 @@ const MainDashboard = () => {
     );
     const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
     const [showRecent, setShowRecent] = useState(false);
+    const [showAiChat, setShowAiChat] = useState(false);
+
     // Getting all ideas
     const fetchIdeas = async () => {
         try {
@@ -148,15 +151,15 @@ const MainDashboard = () => {
     return (
         <>
             <div className=" md:flex justify-between  bg-blue-100">
+                {showAiChat && <AIChat />}
                 <SideMenu
                     onOpen={onOpen}
                     toggleSearchInput={toggleSearchInput}
-                    // showInProgressIdeas={showInProgressIdeas}
-                    // setDisplayAllIdeas={setDisplayAllIdeas}
                     name={name}
                     userName={userName}
                     handleDisplayAllIdeas={handleDisplayAllIdeas}
                     handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                    setShowAiChat={setShowAiChat}
                 />
 
                 <div className="flex flex-col min-h-screen w-full md:w-[1280px]  md:block">

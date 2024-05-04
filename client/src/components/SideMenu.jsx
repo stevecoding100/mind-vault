@@ -23,6 +23,7 @@ const SideMenu = ({
     userName,
     handleDisplayAllIdeas,
     handleDisplayInProgressIdeas,
+    setShowAiChat,
 }) => {
     const navigate = useNavigate();
     const handleSignOut = () => {
@@ -35,7 +36,9 @@ const SideMenu = ({
         // Redirect to the sign-in page or any other desired route
         navigate("/");
     };
-
+    const toggleAiChat = () => {
+        setShowAiChat((prevState) => !prevState);
+    };
     return (
         <>
             {/* Large Screens */}
@@ -96,29 +99,21 @@ const SideMenu = ({
                     </div>
                 </div>
                 <div className="flex flex-col items-center p-2">
-                    <div className="flex items-center w-full">
-                        <BsLightbulb
-                            className="mr-2 text-slate-400"
-                            fontSize={16}
-                        />{" "}
-                        <h2 className="text-md font-semibold text-slate-700">
-                            Ideas
-                        </h2>
-                        <BsChevronCompactUp
-                            className="ml-24 cursor-pointer"
-                            fontSize={18}
-                        />
-                    </div>
-                    {/* <div className="pt-6 flex text-sm flex-col w-full p-2 text-slate-800 h-[50vh] overflow-y-scroll">
-                    {ideas.map((item) => (
-                        <div
-                            key={item.key}
-                            className="mb-4 py-3 px-3 w-full bg-blue-100 shadow-sm text-slate-700 rounded-md font-semibold"
+                    <div className="w-full">
+                        <button
+                            onClick={toggleAiChat}
+                            className=" flex justify-around text-md font-semibold bg-black py-3 px-4  w-full rounded-md text-white"
                         >
-                            <Link className="">{item.title}</Link>
-                        </div>
-                    ))}
-                </div> */}
+                            AI Chat{" "}
+                            <BsLightbulb
+                                className=" text-slate-300"
+                                fontSize={20}
+                            />{" "}
+                        </button>
+                        <p className="text-sm text-gray-400 mt-2 text-center">
+                            Plan your ideas with AI. Here to help!
+                        </p>
+                    </div>
                 </div>
                 <div className="flex flex-col mt-16 p-2">
                     <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">

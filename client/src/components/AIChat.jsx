@@ -9,10 +9,9 @@ import {
     TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-// const openAiKey = import.meta.env.OPENAI_API_KEY;
-const openAiKey = "sk-proj-ZCtLYAQmVfEmShi9zH4vT3BlbkFJRkClu5BPJJgsacCMmfFo";
+const openAiKey = import.meta.env.OPENAI_API_KEY;
 
-const TestingAI = () => {
+const AIChat = () => {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
         { message: "Hello, I am chatGPT!", sender: "chatGPT" },
@@ -72,21 +71,21 @@ const TestingAI = () => {
                 return data.json();
             })
             .then((data) => {
-                console.log(data.choices[0].message.content);
-                setMessages([
-                    ...chatMessages,
-                    {
-                        message: data.choices[0].message.content,
-                        sender: "ChatGPT",
-                    },
-                ]);
-                setTyping(false);
+                console.log(data);
+                // setMessages([
+                //     ...chatMessages,
+                //     {
+                //         message: data.choices[0].message.content,
+                //         sender: "ChatGPT",
+                //     },
+                // ]);
+                // setTyping(false);
             });
     }
 
     return (
         <div>
-            <div className="relative h-[800px] w-[700px]">
+            <div className="absolute  left-[190px] hidden md:block h-full w-[50%]">
                 <MainContainer>
                     <ChatContainer>
                         <MessageList
@@ -112,4 +111,4 @@ const TestingAI = () => {
     );
 };
 
-export default TestingAI;
+export default AIChat;
