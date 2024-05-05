@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import axios from "axios";
 import {
     MainContainer,
     ChatContainer,
@@ -9,19 +10,24 @@ import {
     TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-const openAiKey = import.meta.env.OPENAI_API_KEY;
-
 const AIChat = () => {
     const [typing, setTyping] = useState(false);
     const [messages, setMessages] = useState([
-        { message: "Hello, I am chatGPT!", sender: "chatGPT" },
+        {
+            message:
+                "Hello, I am your AI assistant! What idea you have in mind?",
+            sender: "MindVault",
+            direction: "incoming", // Set direction for initial AI message
+            isMyMessage: false, // Set isMyMessage for initial AI message
+        },
     ]);
 
     const handleSend = async (message) => {
         const newMessage = {
             message: message,
             sender: "user",
-            direction: "outgoing",
+            direction: "outgoing", // Set direction for outgoing user message
+            isMyMessage: true, // Set isMyMessage for outgoing user message
         };
 
         const newMessages = [...messages, newMessage]; // all the old messages, + the new message
@@ -32,57 +38,68 @@ const AIChat = () => {
         setTyping(true);
 
         // process message to chatGPT (send it over and see the response)
-        await processMessageToChatGPT(newMessages);
+        await processMessageToGeminiAI(newMessages);
     };
 
-    async function processMessageToChatGPT(chatMessages) {
-        let apiMessages = chatMessages.map((messageObject) => {
-            let role = "";
+    async function processMessageToGeminiAI(chatMessages) {
+        try {
+            // Extract text from each message object
+            const texts = chatMessages.map((message) => message.message);
 
-            if (messageObject.sender === "ChatGPT") {
-                role = "assistant";
-            } else {
-                role = "user";
-            }
-            return { role: role, content: messageObject.message };
-        });
-        // role: 'user' -> a message from the user, 'assistant' -> a response from chatGPT
-        // 'system' -> generally one initial message defining How we want chatGPT to talk
+            // Concatenate text into a single string
+            const text = texts.join("\n");
 
-        const systemMessage = {
-            role: "system",
-            content: "Explain to me like you are giving me great ideas", // Speak like a pirate, Explain like I have  10 years of experience software engineer
-        };
-
-        const apiRequestBody = {
-            model: "gpt-3.5-turbo",
-            messages: [systemMessage, ...apiMessages], // [message1, message2]
-        };
-
-        await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${openAiKey}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(apiRequestBody),
-        })
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                console.log(data);
-                // setMessages([
-                //     ...chatMessages,
-                //     {
-                //         message: data.choices[0].message.content,
-                //         sender: "ChatGPT",
-                //     },
-                // ]);
-                // setTyping(false);
+            const response = await axios({
+                url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyAY1Ht8XPaIBGCGsV41Ai2LgtUCtWk4EJ8",
+                method: "POST",
+                data: {
+                    contents: [
+                        {
+                            parts: [
+                                {
+                                    text: text,
+                                },
+                            ],
+                        },
+                    ],
+                },
             });
-    }
 
+            const GeminiAnswer =
+                response["data"]["candidates"][0]["content"]["parts"][0][
+                    "text"
+                ]; // Access response text
+
+            // Determine sender based on the last message sender
+            const sender =
+                chatMessages[chatMessages.length - 1].sender === "user"
+                    ? "Gemini"
+                    : "user";
+
+            // Update messages with ChatGPT response
+            const newMessages = [
+                ...chatMessages,
+                {
+                    message: GeminiAnswer,
+                    sender: sender,
+                    direction:
+                        chatMessages[chatMessages.length - 1].sender === "user"
+                            ? "incoming"
+                            : "outgoing",
+                    isMyMessage:
+                        chatMessages[chatMessages.length - 1].sender === "user"
+                            ? false
+                            : true,
+                },
+            ];
+            setMessages(newMessages);
+
+            // Clear typing indicator
+            setTyping(false);
+        } catch (error) {
+            console.error("Error fetching response:", error);
+        }
+    }
     return (
         <div>
             <div className="absolute  left-[190px] hidden md:block h-full w-[50%]">
@@ -92,12 +109,19 @@ const AIChat = () => {
                             scrollBehavior="smooth"
                             typingIndicator={
                                 typing ? (
-                                    <TypingIndicator content="chatGPT is typing" />
+                                    <TypingIndicator content="MindVault is thinking..." />
                                 ) : null
                             }
                         >
                             {messages.map((message, i) => {
-                                return <Message key={i} model={message} />;
+                                return (
+                                    <Message
+                                        key={i}
+                                        model={message}
+                                        isMyMessage={message.isMyMessage} // Pass isMyMessage prop
+                                        direction={message.direction} // Pass direction prop
+                                    />
+                                );
                             })}
                         </MessageList>
                         <MessageInput
