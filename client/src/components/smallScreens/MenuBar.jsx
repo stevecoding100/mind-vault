@@ -2,15 +2,16 @@ import { FaPlusCircle } from "react-icons/fa";
 import { BiHome } from "react-icons/bi";
 import { GrInProgress } from "react-icons/gr";
 import { IoTime } from "react-icons/io5";
-import { FaSearch } from "react-icons/fa";
+
+import { GiArtificialHive } from "react-icons/gi";
 import { Link } from "react-router-dom";
 const MenuBar = ({
     onOpen,
     handleDisplayAllIdeas,
     handleDisplayInProgressIdeas,
-    toggleSearchInput,
     handleRecentClick,
     handleHomeClick,
+    toggleAiChat,
 }) => {
     const handleDisplayAllIdeasAndHomeClick = () => {
         handleDisplayAllIdeas();
@@ -19,7 +20,7 @@ const MenuBar = ({
     return (
         <div>
             {/* Menu Bar */}
-            <div className="mx-auto flex  bg-white items-center justify-between px-5 left-0 right-0 absolute bottom-0 h-16 border-t-2   border-slate-300">
+            <div className="mx-auto flex bg-white items-center justify-between px-5  h-16 border-t-2  border-slate-300">
                 <button
                     onClick={handleDisplayAllIdeasAndHomeClick}
                     className="flex flex-col-reverse items-center text-xs font-semibold text-slate-700 cursor-pointer"
@@ -39,15 +40,18 @@ const MenuBar = ({
                     onClick={onOpen}
                     className="flex flex-col-reverse items-center text-xs font-semibold text-slate-700 cursor-pointer "
                 >
-                    <FaPlusCircle size={22} className="text-blue-700 mt-2" />
+                    <FaPlusCircle size={28} className="text-blue-700 mt-2" />
                     Create Idea
                 </button>
                 <button
-                    onClick={toggleSearchInput}
+                    onClick={toggleAiChat}
                     className="flex flex-col-reverse items-center text-xs font-semibold text-slate-700 cursor-pointer"
                 >
-                    <FaSearch size={22} className="text-slate-500 mt-2" />
-                    Search
+                    <GiArtificialHive
+                        size={22}
+                        className="text-slate-500 mt-2"
+                    />
+                    Ask AI
                 </button>
 
                 <button

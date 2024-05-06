@@ -3,16 +3,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BiHome } from "react-icons/bi";
 import { GrInProgress } from "react-icons/gr";
 import { BsLightbulb } from "react-icons/bs";
-import { BsChevronCompactDown } from "react-icons/bs";
-import { BsChevronCompactUp } from "react-icons/bs";
 import { GrCircleInformation } from "react-icons/gr";
 import { CgSupport } from "react-icons/cg";
 import { BsBook } from "react-icons/bs";
-import { BsArrowLeftCircle } from "react-icons/bs";
-import { BsArrowRightCircle } from "react-icons/bs";
-import { useDisclosure } from "@nextui-org/react";
-import CreatingIdeaModal from "./CreatingIdeaModal";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MobileSideMenu from "./smallScreens/MobileSideMenu";
 
@@ -23,7 +16,7 @@ const SideMenu = ({
     userName,
     handleDisplayAllIdeas,
     handleDisplayInProgressIdeas,
-    setShowAiChat,
+    toggleAiChat,
 }) => {
     const navigate = useNavigate();
     const handleSignOut = () => {
@@ -36,9 +29,7 @@ const SideMenu = ({
         // Redirect to the sign-in page or any other desired route
         navigate("/");
     };
-    const toggleAiChat = () => {
-        setShowAiChat((prevState) => !prevState);
-    };
+
     return (
         <>
             {/* Large Screens */}

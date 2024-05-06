@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import ideaAPI from "../../utils/ideaAPI";
 import CreatingIdeaModal from "../components/CreatingIdeaModal";
-
+import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import SearchInput from "./SearchInput";
 
@@ -16,6 +15,7 @@ const IdeaNotes = ({
     filterIdeas,
     filteredIdeas,
     isLoggedIn,
+    toggleSearchInput,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
@@ -49,13 +49,18 @@ const IdeaNotes = ({
             <h3 className="text-md md:text-xl font-semibold text-slate-700 mb-4 ml-2">
                 My Ideas
             </h3>
+            {}
+            <FaSearch
+                onClick={toggleSearchInput}
+                size={18}
+                className="absolute right-12 top-[220px] text-gray-500 hover:text-gray-700 md:hidden"
+            />
 
             {hasNoIdeas && (
                 <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
                     Create a new idea
                 </p>
             )}
-
             {searchVisible && (
                 <SearchInput
                     value={searchQuery}

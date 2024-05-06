@@ -143,7 +143,10 @@ const MainDashboard = () => {
     const handleHomeClick = () => {
         setShowRecent(false);
     };
-
+    // Toggle AI Chat
+    const toggleAiChat = () => {
+        setShowAiChat((prevState) => !prevState);
+    };
     if (error) {
         return <div>Error: {error}</div>; // Display an error message
     }
@@ -159,7 +162,7 @@ const MainDashboard = () => {
                     userName={userName}
                     handleDisplayAllIdeas={handleDisplayAllIdeas}
                     handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
-                    setShowAiChat={setShowAiChat}
+                    toggleAiChat={toggleAiChat}
                 />
 
                 <div className="flex flex-col min-h-screen w-full md:w-[1280px]  md:block">
@@ -191,6 +194,7 @@ const MainDashboard = () => {
                             filterIdeas={filterIdeas}
                             filteredIdeas={filteredIdeas}
                             name={name}
+                            toggleSearchInput={toggleSearchInput}
                         />
                     )}
                 </div>
@@ -211,6 +215,7 @@ const MainDashboard = () => {
                     toggleSearchInput={toggleSearchInput}
                     handleRecentClick={handleRecentClick}
                     handleHomeClick={handleHomeClick}
+                    toggleAiChat={toggleAiChat}
                 />
             </div>
         </>

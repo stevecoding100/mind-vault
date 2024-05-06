@@ -17,11 +17,11 @@ const MobileSideMenu = ({ name, userName, handleSignOut }) => {
             <div className="w-full h-[80px]  flex justify-between  items-center p-6 md:hidden  bg-blue-700">
                 {/*Menu Icon and Logo */}
                 <div onClick={toggleMenu}>
-                    <IoMenu size={40} className="text-white" />
+                    <IoMenu size={30} className="text-white" />
                 </div>
                 <div className="flex items-center">
-                    <LuBrainCircuit size={20} className="text-white" />
-                    <h5 className="font-bold text-xl ml-2 text-white">
+                    <LuBrainCircuit size={18} className="text-white" />
+                    <h5 className="font-bold text-lg ml-2 text-white">
                         MindVault
                     </h5>
                 </div>
