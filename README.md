@@ -17,5 +17,4 @@ MindVault is an intuitive web application designed to help users capture, organi
 * **Backend:** Node.js with Express.js
 * **Database:** PostgreSQL
 * **Authentication:** JSON Web Tokens (JWT)
-* **State Management:** Redux
-* **Styling:** CSS, Bootstrap
+* **Styling:** CSS, TailwindCSS
