@@ -33,8 +33,10 @@ const MainDashboard = () => {
     const fetchIdeas = async () => {
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
+            if (!userIdeas) {
+                setIdeas([]);
+            }
             setIdeas(userIdeas);
-            console.log("Ideas: ", userIdeas);
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -216,6 +218,7 @@ const MainDashboard = () => {
                     handleRecentClick={handleRecentClick}
                     handleHomeClick={handleHomeClick}
                     toggleAiChat={toggleAiChat}
+                    setShowAiChat={setShowAiChat}
                 />
             </div>
         </>

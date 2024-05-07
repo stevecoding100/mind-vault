@@ -102,7 +102,7 @@ const AIChat = () => {
     }
     return (
         <div>
-            <div className="absolute  md:left-[190px] top-20 block h-full md:w-[50%]">
+            <div className="absolute  md:left-[190px] top-20 md:top-0 block h-full md:w-[50%]">
                 <MainContainer>
                     <ChatContainer>
                         <MessageList

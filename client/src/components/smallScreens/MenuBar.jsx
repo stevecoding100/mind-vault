@@ -2,9 +2,8 @@ import { FaPlusCircle } from "react-icons/fa";
 import { BiHome } from "react-icons/bi";
 import { GrInProgress } from "react-icons/gr";
 import { IoTime } from "react-icons/io5";
-
 import { GiArtificialHive } from "react-icons/gi";
-import { Link } from "react-router-dom";
+
 const MenuBar = ({
     onOpen,
     handleDisplayAllIdeas,
@@ -12,11 +11,15 @@ const MenuBar = ({
     handleRecentClick,
     handleHomeClick,
     toggleAiChat,
+    setShowAiChat,
 }) => {
     const handleDisplayAllIdeasAndHomeClick = () => {
         handleDisplayAllIdeas();
         handleHomeClick();
+        toggleAiChat();
+        setShowAiChat(false);
     };
+
     return (
         <div>
             {/* Menu Bar */}
@@ -28,7 +31,6 @@ const MenuBar = ({
                     <BiHome size={22} className="text-slate-500 mt-2" />
                     Home
                 </button>
-
                 <button
                     onClick={handleDisplayInProgressIdeas}
                     className="flex flex-col-reverse items-center text-xs font-semibold text-slate-700 cursor-pointer"
@@ -53,7 +55,6 @@ const MenuBar = ({
                     />
                     Ask AI
                 </button>
-
                 <button
                     onClick={handleRecentClick}
                     className="flex flex-col-reverse items-center text-xs font-semibold text-slate-700 cursor-pointer"

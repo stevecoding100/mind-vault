@@ -33,7 +33,7 @@ const SideMenu = ({
     return (
         <>
             {/* Large Screens */}
-            <div className="min-h-screen  w-[250px] bg-slate-100 flex flex-col p-4 pt-4 border-r-2 border-slate-300 shadow-md hidden md:block">
+            <div className="min-h-screen  w-[250px] bg-white  flex-col p-4 pt-4 border-r-2 border-slate-300 shadow-md hidden md:block">
                 <div className="flex  w-full h-30 border-b-2 border-slate-300 pb-4">
                     <Link to="#">
                         <img
@@ -59,7 +59,7 @@ const SideMenu = ({
                     <div className="pt-6">
                         <button
                             onClick={handleDisplayAllIdeas}
-                            className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
                         >
                             <BiHome
                                 className="mr-3 group-hover text-slate-400"
@@ -69,7 +69,7 @@ const SideMenu = ({
                         </button>
                         <button
                             onClick={toggleSearchInput} // Toggle search input visibility
-                            className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
                         >
                             <AiOutlineSearch
                                 className="mr-3 group-hover text-slate-400"
@@ -79,7 +79,7 @@ const SideMenu = ({
                         </button>
                         <button
                             onClick={handleDisplayInProgressIdeas}
-                            className="flex tracking-wide items-center text-md font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
+                            className="flex tracking-wide items-center text-sm font-semibold  p-2 w-full h-12 hover:bg-blue-300 rounded-lg transition duration-150 ease-in-out text-slate-700 hover:text-blue-700"
                         >
                             <GrInProgress
                                 className="mr-3 group-hover text-slate-400"
@@ -93,7 +93,7 @@ const SideMenu = ({
                     <div className="w-full">
                         <button
                             onClick={toggleAiChat}
-                            className=" flex justify-around text-md font-semibold bg-black py-3 px-4  w-full rounded-md text-white"
+                            className=" flex justify-around text-sm font-semibold bg-black py-3 px-4  w-full rounded-md text-white"
                         >
                             AI Chat{" "}
                             <BsLightbulb
@@ -102,18 +102,18 @@ const SideMenu = ({
                             />{" "}
                         </button>
                         <p className="text-sm text-gray-400 mt-2 text-center">
-                            Plan your ideas with AI. Here to help!
+                            Plan your ideas with AI. Here to help you!
                         </p>
                     </div>
                 </div>
                 <div className="flex flex-col mt-16 p-2">
-                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
+                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-sm">
                         <CgSupport className="mr-2" /> Support
                     </Link>
-                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
+                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-sm">
                         <GrCircleInformation className="mr-2" /> About
                     </Link>
-                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-md">
+                    <Link className="flex items-center mb-2 font-medium text-slate-500 text-sm">
                         <BsBook className="mr-2" /> Privacy Policy
                     </Link>
                     <button
