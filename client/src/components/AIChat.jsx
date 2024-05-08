@@ -50,7 +50,9 @@ const AIChat = () => {
             const text = texts.join("\n");
 
             const response = await axios({
-                url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyAY1Ht8XPaIBGCGsV41Ai2LgtUCtWk4EJ8`,
+                url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
+                    import.meta.env.VITE_GOOGLE_API_KEY
+                }`,
                 method: "POST",
                 data: {
                     contents: [
