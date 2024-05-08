@@ -19,6 +19,9 @@ app.use(
 // Mount routes
 app.use("/api", ideaRoutes);
 app.use("/api/auth", userRoutes);
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
 
 const init = async () => {
     try {
