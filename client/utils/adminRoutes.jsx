@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseURL = import.meta.env.VITE_API_URL;
-const baseURL = process.env.VITE_API_URL;
+
 const adminRoutes = {
     users: {
         // Get all users (admin only)
