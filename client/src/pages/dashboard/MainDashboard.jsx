@@ -2,17 +2,17 @@ import SideMenu from "../../components/SideMenu";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
 import ideaAPI from "../../../utils/ideaAPI";
+import authAPI from "../../../utils/authAPI";
 import { useState, useEffect } from "react";
 import CreatingIdeaModal from "../../components/CreatingIdeaModal";
 import { useDisclosure } from "@nextui-org/react";
-import SearchInput from "../../components/SearchInput";
 import MenuBar from "../../components/smallScreens/MenuBar";
 import MobileActivity from "../../components/smallScreens/MobileActivity";
 import AIChat from "../../components/AIChat";
 
 const MainDashboard = () => {
     const [ideas, setIdeas] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdea, setSelectedIdea] = useState(null);
@@ -21,31 +21,27 @@ const MainDashboard = () => {
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
     const [displayAll, setDisplayAll] = useState(true);
     const [filteredIdeas, setFilteredIdeas] = useState([]);
-    const [name, setName] = useState(localStorage.getItem("name") || "");
-    const [userName, setUserName] = useState(
-        localStorage.getItem("userName") || ""
-    );
-    const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
+    const [name, setName] = useState(localStorage.getItem("name"));
+    const [userName, setUserName] = useState(localStorage.getItem("userName"));
+    const [userId, setUserId] = useState(localStorage.getItem("userId"));
     const [showRecent, setShowRecent] = useState(false);
     const [showAiChat, setShowAiChat] = useState(false);
 
     // Getting all ideas
-    const fetchIdeas = async () => {
+    const fetchIdeas = async (userId) => {
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
-            if (!userIdeas) {
-                setIdeas([]);
-            }
             setIdeas(userIdeas);
+            setLoadingIdeas(false);
         } catch (error) {
             setError(error.message);
-            setLoading(false);
+            setLoadingIdeas(false);
         }
     };
 
     useEffect(() => {
-        fetchIdeas();
-    }, [userId]);
+        fetchIdeas(userId);
+    }, []);
 
     // Creating an Idea
     const handleCreateIdea = async (newIdea) => {

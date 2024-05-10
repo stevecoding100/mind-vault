@@ -1,6 +1,5 @@
 import axios from "axios";
 const baseURL = import.meta.env.VITE_API_URL;
-const token = localStorage.getItem("token");
 
 const ideaAPI = {
     idea: {
@@ -9,13 +8,14 @@ const ideaAPI = {
                 const ideas = await axios.get(`${baseURL}/ideas/${userId}`, {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `${token}`,
+                        Authorization: `${localStorage.getItem("token")}`,
                     },
                 });
 
                 return ideas.data;
             } catch (error) {
-                throw new Error("Error getting ideas", error);
+                console.log(error);
+                throw new Error("Error getting ideasApi", error);
             }
         },
         createIdea: async (userId, title, description, category) => {
@@ -25,7 +25,7 @@ const ideaAPI = {
                     { title, description, category },
                     {
                         headers: {
-                            Authorization: `${token}`,
+                            Authorization: `${localStorage.getItem("token")}`,
                         },
                     }
                 );
@@ -42,7 +42,7 @@ const ideaAPI = {
                     updateData,
                     {
                         headers: {
-                            Authorization: `${token}`,
+                            Authorization: `${localStorage.getItem("token")}`,
                         },
                     }
                 );
@@ -55,12 +55,12 @@ const ideaAPI = {
             try {
                 const idea = await axios.get(`${baseURL}/ideas/${ideaId}`, {
                     headers: {
-                        Authorization: `${token}`,
+                        Authorization: `${localStorage.getItem("token")}`,
                     },
                 });
                 return idea;
             } catch (error) {
-                throw new Error("Error getting idea", error);
+                throw new Error("Error getting idea by Id", error);
             }
         },
         deleteIdea: async (ideaId) => {
@@ -69,7 +69,7 @@ const ideaAPI = {
                     `${baseURL}/ideas/${ideaId}`,
                     {
                         headers: {
-                            Authorization: `${token}`,
+                            Authorization: `${localStorage.getItem("token")}`,
                         },
                     }
                 );

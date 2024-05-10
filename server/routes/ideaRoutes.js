@@ -25,7 +25,7 @@ router.put(
     ideaController.updateIdea
 );
 
-//  Route to geta single idea
+//  Route to get single idea
 router.get(
     "/ideas/:ideaId",
     userController.isLoggedIn,

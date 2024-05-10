@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
-const ecomAPI = {
+const authAPI = {
     //AUTH
     auth: {
         login: async (formData) => {
@@ -37,7 +37,33 @@ const ecomAPI = {
                 return error;
             }
         },
+        getUserInfo: async (userId) => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    // Handle case where token is not found
+                    throw new Error("Token not found");
+                }
+
+                // Make GET request to fetch user info
+                const response = await axios.get(
+                    `${baseURL}/auth/user/${userId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                // Return user data
+                return response.data;
+            } catch (error) {
+                // Handle errors
+                console.error("Error fetching user info:", error);
+                throw error;
+            }
+        },
     },
 };
 
-export default ecomAPI;
+export default authAPI;

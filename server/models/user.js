@@ -5,11 +5,14 @@ const { client } = require("../database/db");
 const bcrypt = require("bcrypt");
 
 const userModel = {
-    getAllUsers: async () => {
+    getUserById: async (userId) => {
         try {
-            const SQL = `SELECT * FROM users`;
-            const { rows } = await client.query(SQL);
-            return rows;
+            const SQL = `SELECT * FROM users WHERE user_id = $1`;
+            const { rows } = await client.query(SQL, [userId]);
+            if (rows.length === 0) {
+                throw new Error("User not found");
+            }
+            return rows[0];
         } catch (error) {
             console.error("Error fetching users: ", error);
             throw error;

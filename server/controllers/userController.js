@@ -5,13 +5,14 @@ const authMiddleware = require("../middleware/authMiddleware");
 const JWT = process.env.JWT;
 const jwt = require("jsonwebtoken");
 const userController = {
-    getAllUsers: async (req, res) => {
+    getUserById: async (req, res) => {
+        const { userId } = req.params;
         try {
-            const users = await userModel.getAllUsers();
+            const users = await userModel.getUserById(userId);
             res.json(users);
         } catch (error) {
-            console.error("Error fetching users:", error);
-            res.status(500).json({ message: "Internal server error" });
+            console.error("Error fetching user by ID:", error);
+            res.status(500).json({ message: "User not found" });
         }
     },
     createUser: async (req, res) => {

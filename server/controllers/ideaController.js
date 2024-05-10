@@ -10,7 +10,7 @@ const ideaController = {
 
             res.json(ideas);
         } catch (error) {
-            console.error("Error fetching ideas:", error);
+            console.error("Error fetching ideas controllers:", error);
             res.status(500).json({ message: "Internal server error" });
         }
     },
