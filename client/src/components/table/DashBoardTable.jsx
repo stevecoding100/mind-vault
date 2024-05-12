@@ -41,16 +41,16 @@ const DashBoardTable = ({
     const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap; // Check if the user is logged in and has no ideas attached to their account
     const hasNoIdeas = isLoggedIn && ideaData.length === 0;
     return (
-        <div className="w-full lg:w-[1250px] mx-auto flex flex-col items-center md:border-l-1 md:border-t-1 rounded-sm border-[#DADCE2] p-4 md:p-10 h-[85vh] mb-16  overflow-y-scroll">
+        <div className="w-full lg:w-[1250px] mx-auto flex flex-col items-center md:border-l-1 md:border-t-1 rounded-sm border-[#DADCE2] p-4 md:p-10 h-[75vh] mb-16  overflow-y-scroll scroll-smooth">
             <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Search idea..."
-                className=" px-4 w-[350px] mt-12 mb-12 h-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500 lg:hidden"
+                className="p-2 w-[350px] mt-12 mb-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500 lg:hidden"
             />
 
-            <div className="flex w-full  items-center justify-between">
+            <div className="flex w-full px-2 md:px-0 items-center justify-between">
                 <p className="text-xs md:text-sm font-medium">Ideas</p>
                 <input
                     type="text"
@@ -73,7 +73,7 @@ const DashBoardTable = ({
             {ideasToDisplay.map((idea) => (
                 <div
                     key={idea.key}
-                    className="flex justify-between mt-14 border-b-1 border-[#EAECF0] w-full h-24 pb-4"
+                    className="flex justify-between mt-14 border-b-1 border-[#EAECF0] w-full h-24 pb-4 px-2"
                 >
                     {hasNoIdeas && (
                         <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
@@ -104,7 +104,7 @@ const DashBoardTable = ({
                         </p>
                         <HiDotsVertical
                             className="text-md text-[#505970]  mr-2 lg:mr-0"
-                            size={16}
+                            size={15}
                             onClick={() => handleEditIdea(idea)}
                         />
                     </div>

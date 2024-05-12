@@ -3,7 +3,7 @@ import { LuBrainCircuit } from "react-icons/lu";
 import { FaBell } from "react-icons/fa";
 const NavBar = ({ name, userName }) => {
     return (
-        <div className="flex items-center justify-between  pt-8 px-5 md:p-12 w-full">
+        <div className="flex items-center justify-between  pt-8 px-6 md:p-12 w-full">
             {/* Logo Section */}
             <div className="flex items-center">
                 <LuBrainCircuit size={22} className="text-blue-700" />
@@ -12,16 +12,16 @@ const NavBar = ({ name, userName }) => {
                 </h4>
             </div>
             {/* User Profile */}
-            <div className="flex items-center">
+            <div className="flex items-center mr-4">
                 <FaBell
                     size={20}
                     className="text-[#666D80] hidden md:block mr-8 cursor-pointer"
                 />
                 <div className="flex">
                     <img
-                        src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                        src="https://militaryhealthinstitute.org/wp-content/uploads/sites/37/2021/08/blank-profile-picture-png.png"
                         alt="profile picture"
-                        className="w-[40px] h-[40px] rounded-full object-cover mr-3 cursor-pointer"
+                        className="w-[40px] h-[40px] border-2 rounded-full object-cover mr-3 cursor-pointer"
                     />
 
                     <div>
