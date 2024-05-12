@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { HiDotsVertical } from "react-icons/hi";
 import CreatingIdeaModal from "../creatingIdeaModal/CreatingIdeaModal";
-import SearchInput from "../searchInput/SearchInput";
+
 // import MobileDashBoardTable from "./MobileDashBoardTable";
 const DashBoardTable = ({
     ideaData,
@@ -52,7 +51,7 @@ const DashBoardTable = ({
             />
 
             <div className="flex w-full  items-center justify-between">
-                <p className="text-md font-medium">Ideas</p>
+                <p className="text-xs md:text-sm font-medium">Ideas</p>
                 <input
                     type="text"
                     value={searchQuery}
@@ -62,15 +61,13 @@ const DashBoardTable = ({
                 />
 
                 <div className="flex min-w-[185px] md:min-w-[360px] justify-between lg:items-center">
-                    <p className="text-xs md:text-sm text-md font-medium ml-3 lg:ml-0">
+                    <p className="text-xs md:text-sm font-medium ml-3 lg:ml-0">
                         Status
                     </p>
-                    <p className="text-xs md:text-sm text-md font-medium ml-5 lg:ml-0">
+                    <p className="text-xs md:text-sm  font-medium ml-5 lg:ml-0">
                         Date
                     </p>
-                    <p className="text-xs md:text-sm text-md font-medium">
-                        Action
-                    </p>
+                    <p className="text-xs md:text-sm  font-medium">Action</p>
                 </div>
             </div>
             {ideasToDisplay.map((idea) => (
@@ -85,7 +82,7 @@ const DashBoardTable = ({
                     )}
 
                     <div>
-                        <h2 className="text-sm md:text-lg lg:text-xl font-bold">
+                        <h2 className="text-md md:text-lg lg:text-xl font-bold">
                             {truncateDescription(idea.title)}
                         </h2>
                         <p className=" text-xs md:text-sm w-[85%] mt-2">
