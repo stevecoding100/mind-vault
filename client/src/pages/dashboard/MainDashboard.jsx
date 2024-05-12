@@ -1,14 +1,12 @@
-import SideMenu from "../../components/SideMenu";
-import Header from "../../components/Header";
-import Activity from "../../components/Activity";
+import SideMenu from "../../components/sidemenu/SideMenu";
 import ideaAPI from "../../../utils/ideaAPI";
-import authAPI from "../../../utils/authAPI";
 import { useState, useEffect } from "react";
-import CreatingIdeaModal from "../../components/CreatingIdeaModal";
+import CreatingIdeaModal from "../../components/creatingIdeaModal/CreatingIdeaModal";
 import { useDisclosure } from "@nextui-org/react";
-import MenuBar from "../../components/smallScreens/MenuBar";
-import MobileActivity from "../../components/smallScreens/MobileActivity";
-import AIChat from "../../components/AIChat";
+import NavBar from "../../components/navBar/NavBar";
+import DashboardTable from "../../components/table/DashBoardTable";
+import MobileMenuBar from "../../components/sidemenu/MobileMenuBar";
+import AIChat from "../../components/aiChat/AIChat";
 
 const MainDashboard = () => {
     const [ideas, setIdeas] = useState([]);
@@ -16,7 +14,6 @@ const MainDashboard = () => {
     const [error, setError] = useState(null);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdea, setSelectedIdea] = useState(null);
-    const [searchVisible, setSearchVisible] = useState(false);
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
     const [displayAll, setDisplayAll] = useState(true);
@@ -24,7 +21,6 @@ const MainDashboard = () => {
     const [name, setName] = useState(localStorage.getItem("name"));
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const [userId, setUserId] = useState(localStorage.getItem("userId"));
-    const [showRecent, setShowRecent] = useState(false);
     const [showAiChat, setShowAiChat] = useState(false);
 
     // Getting all ideas
@@ -93,17 +89,11 @@ const MainDashboard = () => {
     const handleDelete = async (ideaId) => {
         try {
             await ideaAPI.idea.deleteIdea(ideaId);
-
             // After successfully deleting the idea, filter out the deleted idea from the state
             setIdeas(ideas.filter((idea) => idea.idea_id !== ideaId));
         } catch (error) {
             setError("Erro deleting idea");
         }
-    };
-
-    // Toggle search input visibility
-    const toggleSearchInput = () => {
-        setSearchVisible(!searchVisible);
     };
 
     // Display on "In Porgress" Ideas
@@ -132,15 +122,6 @@ const MainDashboard = () => {
         showInProgressIdeas();
     };
 
-    // Handle Recent button click
-    const handleRecentClick = () => {
-        setShowRecent(true);
-    };
-
-    // Handle Home button click
-    const handleHomeClick = () => {
-        setShowRecent(false);
-    };
     // Toggle AI Chat
     const toggleAiChat = () => {
         setShowAiChat((prevState) => !prevState);
@@ -150,74 +131,46 @@ const MainDashboard = () => {
     }
 
     return (
-        <>
-            <div className=" md:flex justify-between  bg-blue-100">
-                {showAiChat && <AIChat />}
+        <div className="w-full min-h-screen relative">
+            <NavBar name={name} userName={userName} />
+            <div className="flex w-full max-h-screen">
                 <SideMenu
                     onOpen={onOpen}
-                    toggleSearchInput={toggleSearchInput}
+                    handleDisplayAllIdeas={handleDisplayAllIdeas}
+                    handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                    toggleAiChat={toggleAiChat}
+                />
+                {showAiChat && <AIChat />}
+                <CreatingIdeaModal
+                    isOpen={isOpen}
+                    onOpenChange={onOpenChange}
+                    onCreateIdea={handleCreateIdea}
+                    fetchIdeas={fetchIdeas}
+                    handleEdit={handleEdit}
+                    handleDelete={handleDelete}
+                    selectedIdea={selectedIdea}
+                />
+                <DashboardTable
+                    ideaData={ideas}
+                    fetchIdeas={fetchIdeas}
+                    handleEdit={handleEdit}
+                    onOpenChange={onOpenChange}
+                    handleDelete={handleDelete}
+                    inProgressIdeas={inProgressIdeas}
+                    displayAllIdeas={displayAllIdeas}
+                    filterIdeas={filterIdeas}
+                    filteredIdeas={filteredIdeas}
                     name={name}
-                    userName={userName}
-                    handleDisplayAllIdeas={handleDisplayAllIdeas}
-                    handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
-                    toggleAiChat={toggleAiChat}
-                />
-
-                <div className="flex flex-col min-h-screen w-full md:w-[1280px]  md:block">
-                    <CreatingIdeaModal
-                        isOpen={isOpen}
-                        onOpenChange={onOpenChange}
-                        onCreateIdea={handleCreateIdea}
-                        fetchIdeas={fetchIdeas}
-                        handleEdit={handleEdit}
-                        handleDelete={handleDelete}
-                        selectedIdea={selectedIdea}
-                    />
-                    {showRecent ? (
-                        <MobileActivity
-                            ideaData={ideas}
-                            onOpenChange={onOpenChange}
-                            setSelectedIdea={setSelectedIdea}
-                        />
-                    ) : (
-                        <Header
-                            ideaData={ideas}
-                            fetchIdeas={fetchIdeas}
-                            handleEdit={handleEdit}
-                            onOpenChange={onOpenChange}
-                            handleDelete={handleDelete}
-                            inProgressIdeas={inProgressIdeas}
-                            displayAllIdeas={displayAllIdeas}
-                            searchVisible={searchVisible}
-                            filterIdeas={filterIdeas}
-                            filteredIdeas={filteredIdeas}
-                            name={name}
-                            toggleSearchInput={toggleSearchInput}
-                        />
-                    )}
-                </div>
-
-                <div className="w-[400px] hidden md:block">
-                    <Activity
-                        ideaData={ideas}
-                        onOpenChange={onOpenChange}
-                        setSelectedIdea={setSelectedIdea}
-                    />
-                </div>
-            </div>
-            <div className="absolute md:hidden w-full">
-                <MenuBar
-                    onOpen={onOpen}
-                    handleDisplayAllIdeas={handleDisplayAllIdeas}
-                    handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
-                    toggleSearchInput={toggleSearchInput}
-                    handleRecentClick={handleRecentClick}
-                    handleHomeClick={handleHomeClick}
-                    toggleAiChat={toggleAiChat}
-                    setShowAiChat={setShowAiChat}
                 />
             </div>
-        </>
+            {/* Small Screens */}
+            <MobileMenuBar
+                onOpen={onOpen}
+                handleDisplayAllIdeas={handleDisplayAllIdeas}
+                handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                toggleAiChat={toggleAiChat}
+            />
+        </div>
     );
 };
 
