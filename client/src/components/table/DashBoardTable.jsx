@@ -47,7 +47,7 @@ const DashBoardTable = ({
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Search idea..."
-                className="p-2 w-[350px] mt-12 mb-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500 lg:hidden"
+                className="p-2 w-[360px] mt-12 mb-12 rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500 lg:hidden"
             />
 
             <div className="flex w-full px-2 md:px-0 items-center justify-between">
