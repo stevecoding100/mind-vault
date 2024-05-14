@@ -6,7 +6,7 @@ const NavBar = ({ name, userName }) => {
         <div className="flex items-center justify-between  pt-8 px-6 md:p-12 w-full">
             {/* Logo Section */}
             <div className="flex items-center">
-                <LuBrainCircuit size={22} className="text-blue-700" />
+                <LuBrainCircuit size={22} className="text-blue-700 ml-2" />
                 <h4 className="text-[#3f475a] text-lg ml-2 font-bold">
                     MindVault
                 </h4>
