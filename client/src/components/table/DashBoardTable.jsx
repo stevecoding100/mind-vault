@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import CreatingIdeaModal from "../creatingIdeaModal/CreatingIdeaModal";
+import SettingsMenu from "../sidemenu/SettingsMenu";
 
 // import MobileDashBoardTable from "./MobileDashBoardTable";
 const DashBoardTable = ({
@@ -41,7 +42,7 @@ const DashBoardTable = ({
     const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap; // Check if the user is logged in and has no ideas attached to their account
     const hasNoIdeas = isLoggedIn && ideaData.length === 0;
     return (
-        <div className="w-full lg:w-[1250px] mx-auto flex flex-col items-center md:border-l-1 md:border-t-1 rounded-sm border-[#DADCE2] p-4 md:p-10 h-[75vh] mb-16  overflow-y-scroll scroll-smooth">
+        <div className="w-full  mx-auto flex flex-col items-center md:border-l-1 md:border-t-1 rounded-sm border-[#DADCE2] p-4 md:p-10 h-[75vh] mb-16  overflow-y-scroll scroll-smooth">
             <input
                 type="text"
                 value={searchQuery}

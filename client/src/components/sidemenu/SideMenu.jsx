@@ -6,7 +6,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { GrCircleInformation } from "react-icons/gr";
 import { CgSupport } from "react-icons/cg";
 import { BsBook } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideMenu = ({
     onOpen,
@@ -28,24 +28,32 @@ const SideMenu = ({
     return (
         <div className="w-[300px] p-12 hidden lg:block min-h-screen">
             <ul>
-                <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
-                    <BiHome size={18} className="mr-2" />
-                    <button onClick={handleDisplayAllIdeas}>Dashboard</button>
-                </li>
+                <Link to="/dashboard">
+                    <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
+                        <BiHome size={18} className="mr-2" />
+                        <button onClick={handleDisplayAllIdeas}>
+                            Dashboard
+                        </button>
+                    </li>
+                </Link>
                 <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                     <IoRocketOutline size={18} className="mr-2" />
                     <button onClick={handleDisplayInProgressIdeas}>
                         In Progress
                     </button>
                 </li>
-                <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
-                    <PiStarFourBold size={18} className="mr-2" />
-                    <button onClick={toggleAiChat}>AI Chat</button>
-                </li>
-                <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
-                    <IoSettingsOutline size={18} className="mr-2" />
-                    <button>Settings</button>
-                </li>
+                <Link to="/aichat">
+                    <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
+                        <PiStarFourBold size={18} className="mr-2" />
+                        <button>AI Chat</button>
+                    </li>
+                </Link>
+                <Link to="/settings">
+                    <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
+                        <IoSettingsOutline size={18} className="mr-2" />
+                        <button>Settings</button>
+                    </li>
+                </Link>
             </ul>
 
             <button

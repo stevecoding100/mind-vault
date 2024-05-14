@@ -15,10 +15,9 @@ const authAPI = {
                 localStorage.setItem("userId", user.data.userId);
                 localStorage.setItem("name", user.data.user.name);
                 localStorage.setItem("userName", user.data.user.username);
-
                 return user;
             } catch (error) {
-                return error;
+                throw new Error("Login failed. Please check your credentials.");
             }
         },
         register: async (formData) => {

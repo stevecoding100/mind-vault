@@ -1,9 +1,10 @@
 import React from "react";
 import { LuBrainCircuit } from "react-icons/lu";
 import { FaBell } from "react-icons/fa";
-const NavBar = ({ name, userName }) => {
+
+const NavBar = () => {
     return (
-        <div className="flex items-center justify-between  pt-8 px-6 md:p-12 w-full">
+        <div className="flex items-center justify-between pt-8 px-6 md:p-12 w-full">
             {/* Logo Section */}
             <div className="flex items-center">
                 <LuBrainCircuit size={22} className="text-blue-700 ml-2" />
@@ -25,8 +26,12 @@ const NavBar = ({ name, userName }) => {
                     />
 
                     <div>
-                        <p className="font-bold text-sm md:text-md ">{name}</p>
-                        <p className="text-sm">{userName}</p>
+                        <p className="font-bold text-sm md:text-md">
+                            {localStorage.getItem("name")}
+                        </p>
+                        <p className="text-sm">
+                            {localStorage.getItem("userName")}
+                        </p>
                     </div>
                 </div>
             </div>
