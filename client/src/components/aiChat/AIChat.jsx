@@ -102,37 +102,39 @@ const AIChat = () => {
             console.error("Error fetching response:", error);
         }
     }
+
     return (
-        <div>
-            <div className="absolute md:left-[190px] md:top-0 block h-full md:w-[50%]">
-                <MainContainer>
-                    <ChatContainer>
-                        <MessageList
-                            scrollBehavior="smooth"
-                            typingIndicator={
-                                typing ? (
-                                    <TypingIndicator content="MindVault is thinking..." />
-                                ) : null
-                            }
-                        >
-                            {messages.map((message, i) => {
-                                return (
-                                    <Message
-                                        key={i}
-                                        model={message}
-                                        isMyMessage={message.isMyMessage} // Pass isMyMessage prop
-                                        direction={message.direction} // Pass direction prop
-                                    />
-                                );
-                            })}
-                        </MessageList>
-                        <MessageInput
-                            placeholder="Type message here"
-                            onSend={handleSend}
-                        />
-                    </ChatContainer>
-                </MainContainer>
-            </div>
+        <div className="w-full">
+            <h1 className="text-lg md:text-2xl font-bold m-4">AI Chat</h1>
+            <MainContainer>
+                <ChatContainer>
+                    <MessageList
+                        className="min-h-screen m-2 mt-4"
+                        scrollBehavior="smooth"
+                        typingIndicator={
+                            typing ? (
+                                <TypingIndicator content="MindVault is thinking..." />
+                            ) : null
+                        }
+                    >
+                        {messages.map((message, i) => {
+                            return (
+                                <Message
+                                    key={i}
+                                    model={message}
+                                    isMyMessage={message.isMyMessage} // Pass isMyMessage prop
+                                    direction={message.direction} // Pass direction prop
+                                />
+                            );
+                        })}
+                    </MessageList>
+                    <MessageInput
+                        placeholder="Type message here"
+                        onSend={handleSend}
+                        className="m-3"
+                    />
+                </ChatContainer>
+            </MainContainer>
         </div>
     );
 };

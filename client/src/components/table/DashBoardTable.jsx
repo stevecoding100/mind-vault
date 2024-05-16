@@ -11,7 +11,6 @@ const DashBoardTable = ({
     displayAllIdeas,
     filterIdeas,
     filteredIdeas,
-    onOpen,
     toggleIdeas,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,11 +68,11 @@ const DashBoardTable = ({
                     {displayAllIdeas ? "In Progress" : "All Ideas"}
                 </button>
 
-                <div className="flex min-w-[185px] md:min-w-[250px] ml-4 justify-between lg:items-center">
+                <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[400px] ml-4 justify-between lg:items-center">
                     <p className="text-xs md:text-sm font-medium ml-3 lg:ml-0">
                         Status
                     </p>
-                    <p className="text-xs md:text-sm  font-medium ml-5 lg:ml-0">
+                    <p className="text-xs md:text-sm  font-medium ml-6 lg:ml-0">
                         Date
                     </p>
                     <p className="text-xs md:text-sm  font-medium">Action</p>
@@ -91,16 +90,16 @@ const DashBoardTable = ({
                     )}
 
                     <div>
-                        <h2 className="text-md md:text-lg lg:text-xl font-bold">
+                        <h2 className="text-md md:text-lg xl:text-xl font-bold">
                             {truncateDescription(idea.title)}
                         </h2>
-                        <p className=" text-xs md:text-sm w-[85%] mt-2">
+                        <p className=" text-xs md:text-sm xl:text-md w-[85%] mt-2">
                             {truncateDescription(idea.description)}
                         </p>
                     </div>
-                    <div className="flex min-w-[185px] md:min-w-[250px]   justify-between items-center lg:mr-3">
+                    <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[400px]   justify-between items-center lg:mr-3">
                         <p
-                            className={`text-xs  md:text-sm lg:text-md font-bold ${
+                            className={`text-xs  md:text-sm xl:text-md font-bold ${
                                 idea.category === "Complete"
                                     ? "text-green-700"
                                     : "text-yellow-700"

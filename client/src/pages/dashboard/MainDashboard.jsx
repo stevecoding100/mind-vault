@@ -1,43 +1,23 @@
-import SideMenu from "../../components/sidemenu/SideMenu";
 import ideaAPI from "../../../utils/ideaAPI";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CreatingIdeaModal from "../../components/creatingIdeaModal/CreatingIdeaModal";
-import { useDisclosure } from "@nextui-org/react";
-import NavBar from "../../components/navBar/NavBar";
 import DashboardTable from "../../components/table/DashBoardTable";
-import MobileMenuBar from "../../components/sidemenu/MobileMenuBar";
-import AIChat from "../../components/aiChat/AIChat";
 
-const MainDashboard = () => {
-    const [ideas, setIdeas] = useState([]);
-    const [loadingIdeas, setLoadingIdeas] = useState(true);
-    const [error, setError] = useState(null);
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+const MainDashboard = ({
+    isOpen,
+    onOpen,
+    onOpenChange,
+    ideas,
+    error,
+    fetchIdeas,
+    userId,
+    setIdeas,
+    setError,
+}) => {
     const [selectedIdea, setSelectedIdea] = useState(null);
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
     const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
-    const [displayAll, setDisplayAll] = useState(true);
     const [filteredIdeas, setFilteredIdeas] = useState([]);
-    const [name, setName] = useState(localStorage.getItem("name"));
-    const [userName, setUserName] = useState(localStorage.getItem("userName"));
-    const [userId, setUserId] = useState(localStorage.getItem("userId"));
-    const [showAiChat, setShowAiChat] = useState(false);
-
-    // Getting all ideas
-    const fetchIdeas = async (userId) => {
-        try {
-            const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
-            setIdeas(userIdeas);
-            setLoadingIdeas(false);
-        } catch (error) {
-            setError(error.message);
-            setLoadingIdeas(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchIdeas(userId);
-    }, []);
 
     // Creating an Idea
     const handleCreateIdea = async (newIdea) => {
@@ -126,10 +106,8 @@ const MainDashboard = () => {
 
     return (
         <div className="w-full min-h-screen relative">
-            <NavBar name={name} userName={userName} />
+            <h1 className="text-lg md:text-2xl font-bold m-4">Dashboard</h1>
             <div className="flex w-full max-h-screen">
-                <SideMenu onOpen={onOpen} />
-                {showAiChat && <AIChat />}
                 <CreatingIdeaModal
                     isOpen={isOpen}
                     onOpenChange={onOpenChange}
@@ -149,19 +127,10 @@ const MainDashboard = () => {
                     displayAllIdeas={displayAllIdeas}
                     filterIdeas={filterIdeas}
                     filteredIdeas={filteredIdeas}
-                    name={name}
                     onOpen={onOpen}
                     toggleIdeas={toggleIdeas}
                 />
             </div>
-            {/* Small Screens */}
-            <MobileMenuBar
-                onOpen={onOpen}
-                toggleIdeas={toggleIdeas}
-                // handleDisplayAllIdeas={handleDisplayAllIdeas}
-                // handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
-                // toggleAiChat={toggleAiChat}
-            />
         </div>
     );
 };

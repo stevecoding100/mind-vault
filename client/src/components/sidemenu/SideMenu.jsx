@@ -9,19 +9,8 @@ import { BsBook } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
 const SideMenu = ({ onOpen }) => {
-    const navigate = useNavigate();
-    const handleSignOut = () => {
-        // Clear user authentication data from local storage
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("name");
-        localStorage.removeItem("userName");
-
-        // Redirect to the sign-in page or any other desired route
-        navigate("/");
-    };
     return (
-        <div className="w-[300px] p-12 hidden lg:block min-h-screen">
+        <div className="w-[300px] p-12 pt-20 hidden lg:block min-h-screen">
             <ul>
                 <Link to="/dashboard">
                     <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
@@ -29,12 +18,6 @@ const SideMenu = ({ onOpen }) => {
                         <button>Dashboard</button>
                     </li>
                 </Link>
-                {/* <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
-                    <IoRocketOutline size={18} className="mr-2" />
-                    <button onClick={handleDisplayInProgressIdeas}>
-                        In Progress
-                    </button>
-                </li> */}
                 <Link to="/aichat">
                     <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                         <PiStarFourBold size={18} className="mr-2" />
@@ -69,13 +52,6 @@ const SideMenu = ({ onOpen }) => {
                         Privacy Policy
                     </li>
                 </ul>
-
-                <button
-                    onClick={handleSignOut}
-                    className="py-3 px-4 mt-4 bg-blue-200 rounded-md tracking-wide font-bold text-slate-600 hover:bg-red-500 hover:text-slate-100 "
-                >
-                    Sign Out
-                </button>
             </div>
         </div>
     );

@@ -47,10 +47,10 @@ const SignUpPage = () => {
                     alt="popular anime show"
                 />
                 <div className="fixed top-0 left-0 w-full h-screen"></div>
-                <div className="fixed w-full px-4 py-16 z-50">
-                    <div className="max-w-[450px] h-[650px] mx-auto bg-gray-300 text-gray-800 rounded-md">
+                <div className="fixed w-full px-3 py-12 z-50">
+                    <div className="max-w-[450px] h-[650px] mx-auto bg-black/85 text-gray-800 rounded-md">
                         <div className="max-w-[320px] mx-auto py-16">
-                            <h1 className="text-3xl font-bold font-sans">
+                            <h1 className="text-3xl font-bold font-sans text-white">
                                 Sign Up
                             </h1>
                             <form
@@ -112,7 +112,7 @@ const SignUpPage = () => {
                                 >
                                     Sign Up
                                 </button>
-                                <div className="flex justify-between items-center text-sm text-gray-600 font-sans">
+                                <div className="flex justify-between items-center text-sm text-gray-400 font-sans">
                                     <p>
                                         <input
                                             className="mr-2"
@@ -123,10 +123,13 @@ const SignUpPage = () => {
                                     <p>Need Help?</p>
                                 </div>
                                 <p className="py-8 font-sans">
-                                    <span className="text-gray-600">
+                                    <span className="text-gray-400">
                                         Already a user to MindVault?
                                     </span>
-                                    <Link to="/"> Sign In</Link>
+                                    <Link to="/" className="text-gray-200">
+                                        {" "}
+                                        Sign In
+                                    </Link>
                                 </p>
                             </form>
                         </div>
