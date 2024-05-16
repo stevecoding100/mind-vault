@@ -1,29 +1,27 @@
+import SideMenu from "../../components/sidemenu/SideMenu";
 import ideaAPI from "../../../utils/ideaAPI";
 import { useState, useEffect } from "react";
 import CreatingIdeaModal from "../../components/creatingIdeaModal/CreatingIdeaModal";
+import { useDisclosure } from "@nextui-org/react";
+import NavBar from "../../components/navBar/NavBar";
 import DashboardTable from "../../components/table/DashBoardTable";
 import MobileMenuBar from "../../components/sidemenu/MobileMenuBar";
-// import SettingsMenu from "../../components/sidemenu/SettingsMenu";
+import AIChat from "../../components/aiChat/AIChat";
 
-const MainDashboard = ({
-    isOpen,
-    onOpen,
-    onOpenChange,
-    filterIdeas,
-    setIdeas,
-    ideas,
-    handleDisplayAllIdeas,
-    handleDisplayInProgressIdeas,
-    toggleAiChat,
-    inProgressIdeas,
-    displayAllIdeas,
-    displayAll,
-    filteredIdeas,
-}) => {
+const MainDashboard = () => {
+    const [ideas, setIdeas] = useState([]);
     const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selectedIdea, setSelectedIdea] = useState(null);
+    const [inProgressIdeas, setInProgressIdeas] = useState(null);
+    const [displayAllIdeas, setDisplayAllIdeas] = useState(true);
+    const [displayAll, setDisplayAll] = useState(true);
+    const [filteredIdeas, setFilteredIdeas] = useState([]);
+    const [name, setName] = useState(localStorage.getItem("name"));
+    const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const [userId, setUserId] = useState(localStorage.getItem("userId"));
+    const [showAiChat, setShowAiChat] = useState(false);
 
     // Getting all ideas
     const fetchIdeas = async (userId) => {
@@ -40,6 +38,7 @@ const MainDashboard = ({
     useEffect(() => {
         fetchIdeas(userId);
     }, []);
+
     // Creating an Idea
     const handleCreateIdea = async (newIdea) => {
         try {
@@ -97,13 +96,40 @@ const MainDashboard = ({
         }
     };
 
+    const filterIdeas = (query) => {
+        const filtered = ideas.filter((idea) =>
+            idea.title.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredIdeas(filtered);
+    };
+
+    const toggleIdeas = () => {
+        // Check if displayAllIdeas is true
+        if (displayAllIdeas) {
+            // Filter ideas that are in progress
+            const filteredInProgressIdeas = ideas.filter(
+                (idea) => idea.category === "In Progress"
+            );
+            // Set inProgressIdeas state with filtered ideas
+            setInProgressIdeas(filteredInProgressIdeas);
+        } else {
+            // If displayAllIdeas is false, set inProgressIdeas state back to all ideas
+            setInProgressIdeas(null);
+        }
+        // Toggle the displayAllIdeas state
+        setDisplayAllIdeas(!displayAllIdeas);
+    };
+
     if (error) {
         return <div>Error: {error}</div>; // Display an error message
     }
 
     return (
-        <div className=" w-full lg:min-w-[1200px]  min-h-screen">
+        <div className="w-full min-h-screen relative">
+            <NavBar name={name} userName={userName} />
             <div className="flex w-full max-h-screen">
+                <SideMenu onOpen={onOpen} />
+                {showAiChat && <AIChat />}
                 <CreatingIdeaModal
                     isOpen={isOpen}
                     onOpenChange={onOpenChange}
@@ -124,8 +150,18 @@ const MainDashboard = ({
                     filterIdeas={filterIdeas}
                     filteredIdeas={filteredIdeas}
                     name={name}
+                    onOpen={onOpen}
+                    toggleIdeas={toggleIdeas}
                 />
             </div>
+            {/* Small Screens */}
+            <MobileMenuBar
+                onOpen={onOpen}
+                toggleIdeas={toggleIdeas}
+                // handleDisplayAllIdeas={handleDisplayAllIdeas}
+                // handleDisplayInProgressIdeas={handleDisplayInProgressIdeas}
+                // toggleAiChat={toggleAiChat}
+            />
         </div>
     );
 };

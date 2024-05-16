@@ -8,12 +8,7 @@ import { CgSupport } from "react-icons/cg";
 import { BsBook } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
-const SideMenu = ({
-    onOpen,
-    handleDisplayAllIdeas,
-    handleDisplayInProgressIdeas,
-    toggleAiChat,
-}) => {
+const SideMenu = ({ onOpen }) => {
     const navigate = useNavigate();
     const handleSignOut = () => {
         // Clear user authentication data from local storage
@@ -31,17 +26,15 @@ const SideMenu = ({
                 <Link to="/dashboard">
                     <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                         <BiHome size={18} className="mr-2" />
-                        <button onClick={handleDisplayAllIdeas}>
-                            Dashboard
-                        </button>
+                        <button>Dashboard</button>
                     </li>
                 </Link>
-                <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
+                {/* <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                     <IoRocketOutline size={18} className="mr-2" />
                     <button onClick={handleDisplayInProgressIdeas}>
                         In Progress
                     </button>
-                </li>
+                </li> */}
                 <Link to="/aichat">
                     <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                         <PiStarFourBold size={18} className="mr-2" />

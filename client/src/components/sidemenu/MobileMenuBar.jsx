@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiHome } from "react-icons/bi";
 import { IoRocketOutline } from "react-icons/io5";
 import { PiStarFourBold } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const MobileMenuBar = ({
-    onOpen,
-    handleDisplayAllIdeas,
-    handleDisplayInProgressIdeas,
-    // toggleAiChat,
-}) => {
+const MobileMenuBar = ({ onOpen, toggleIdeas }) => {
     return (
-        <div className="sticky  bottom-0 w-full h-full lg:hidden p-4 bg-slate-800">
+        <div className="sticky   bottom-0 w-full h-full lg:hidden p-4 bg-slate-800">
             <ul className="flex justify-between h-[80px] mt-1">
-                <button onClick={handleDisplayAllIdeas}>
+                <button>
                     <Link to="/dashboard">
                         <li className="flex flex-col items-center  font-bold text-xs text-slate-200">
                             <BiHome size={20} className="mb-5" />
@@ -23,17 +18,17 @@ const MobileMenuBar = ({
                     </Link>
                 </button>
 
-                <button onClick={handleDisplayInProgressIdeas}>
+                {/* <button onClick={toggleIdeas}>
                     <li className="flex flex-col items-center font-bold text-xs text-slate-200">
                         <IoRocketOutline size={20} className="mb-5" />
                         In Progress
                     </li>
-                </button>
+                </button> */}
                 <button onClick={onOpen}>
-                    <li className="flex flex-col items-center font-bold text-xs text-slate-200">
+                    <li className="flex flex-col items-center font-bold text-xs mb-3 text-slate-200">
                         <FaPlus
-                            size={22}
-                            className="mb-2 text-white bg-blue-700 w-[35px] h-[35px] p-2 rounded-full"
+                            size={20}
+                            className="mb-4 text-white bg-blue-700 w-[35px] h-[35px] p-2 rounded-full"
                         />
                         Create Idea
                     </li>

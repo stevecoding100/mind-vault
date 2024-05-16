@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { HiDotsVertical } from "react-icons/hi";
 import CreatingIdeaModal from "../creatingIdeaModal/CreatingIdeaModal";
-import SettingsMenu from "../sidemenu/SettingsMenu";
 
 // import MobileDashBoardTable from "./MobileDashBoardTable";
 const DashBoardTable = ({
@@ -12,6 +11,8 @@ const DashBoardTable = ({
     displayAllIdeas,
     filterIdeas,
     filteredIdeas,
+    onOpen,
+    toggleIdeas,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
@@ -61,7 +62,14 @@ const DashBoardTable = ({
                     className="h-10 px-4 min-w-[250px] hidden lg:block rounded-md border-2 border-gray-300 focus:outline-none focus:border-blue-500"
                 />
 
-                <div className="flex min-w-[185px] md:min-w-[360px] justify-between lg:items-center">
+                <button
+                    onClick={toggleIdeas}
+                    className="w-24 md:w-28  h-8 md:h-10 px-1 md:px-0 text-xs  font-bold rounded-md border-yellow-600 border-2 text-yellow-700 hover:bg-yellow-700 hover:text-white focus:outline-none"
+                >
+                    {displayAllIdeas ? "In Progress" : "All Ideas"}
+                </button>
+
+                <div className="flex min-w-[185px] md:min-w-[250px] ml-4 justify-between lg:items-center">
                     <p className="text-xs md:text-sm font-medium ml-3 lg:ml-0">
                         Status
                     </p>
@@ -74,7 +82,7 @@ const DashBoardTable = ({
             {ideasToDisplay.map((idea) => (
                 <div
                     key={idea.key}
-                    className="flex justify-between mt-14 border-b-1 border-[#EAECF0] w-full h-24 pb-4 px-2"
+                    className="flex justify-between mt-14 border-b-1 ml-4 border-[#EAECF0] w-full h-24 pb-4 px-2"
                 >
                     {hasNoIdeas && (
                         <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
@@ -90,7 +98,7 @@ const DashBoardTable = ({
                             {truncateDescription(idea.description)}
                         </p>
                     </div>
-                    <div className="flex min-w-[185px] md:min-w-[360px] justify-between items-center lg:mr-3">
+                    <div className="flex min-w-[185px] md:min-w-[250px]   justify-between items-center lg:mr-3">
                         <p
                             className={`text-xs  md:text-sm lg:text-md font-bold ${
                                 idea.category === "Complete"
