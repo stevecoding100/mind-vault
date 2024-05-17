@@ -39,15 +39,10 @@ function App() {
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
             setIdeas(userIdeas);
-            setLoadingIdeas(false);
+            setError(null); // Clear any previous errors
         } catch (error) {
-            if (error.response && error.response.status === 404) {
-                // Handle case where no ideas are found
-                setIdeas([]);
-            } else {
-                // Handle other errors
-                setError(error.message);
-            }
+            // Handle other errors
+            setError(error.message);
         } finally {
             setLoadingIdeas(false);
         }
@@ -65,8 +60,10 @@ function App() {
         localStorage.removeItem("userId");
         localStorage.removeItem("name");
         localStorage.removeItem("userName");
-
-        // Redirect to the sign-in page or any other desired route
+        setName(null);
+        setUserName(null);
+        setUserId(null);
+        // setIdeas([]);
         navigate("/");
     };
 
@@ -101,6 +98,7 @@ function App() {
                                         setIdeas={setIdeas}
                                         userId={userId}
                                         setError={setError}
+                                        loadingIdeas={loadingIdeas}
                                     />
                                 }
                             />

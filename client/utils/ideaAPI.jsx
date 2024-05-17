@@ -14,12 +14,12 @@ const ideaAPI = {
 
                 return response.data;
             } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    // Handle case where no ideas are found
+                if (error.response) {
+                    // No ideas found, return empty array
                     return [];
                 }
-                console.log(error);
-                throw new Error("Error getting ideasApi", error);
+                console.error("Error getting ideas from API:", error);
+                throw new Error("Error getting ideas from API");
             }
         },
         createIdea: async (userId, title, description, category) => {

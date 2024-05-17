@@ -7,33 +7,37 @@ const authAPI = {
     auth: {
         login: async (formData) => {
             try {
-                const user = await axios.post(
+                const response = await axios.post(
                     `${baseURL}/auth/users/login`,
                     formData
                 );
-                localStorage.setItem("token", user.data.token);
-                localStorage.setItem("userId", user.data.userId);
-                localStorage.setItem("name", user.data.user.name);
-                localStorage.setItem("userName", user.data.user.username);
-                return user;
+
+                const { token, user } = response.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("userId", user.user_id);
+                localStorage.setItem("name", user.name);
+                localStorage.setItem("userName", user.username);
+                return response;
             } catch (error) {
                 throw new Error("Login failed. Please check your credentials.");
             }
         },
         register: async (formData) => {
             try {
-                const user = await axios.post(
+                const response = await axios.post(
                     `${baseURL}/auth/users/signup`,
                     formData
                 );
-                localStorage.setItem("token", user.data.token);
-                localStorage.setItem("userId", user.data.userId);
-                localStorage.setItem("name", user.data.name);
-                localStorage.setItem("userName", user.data.username);
 
-                return user;
+                const { token, user } = response.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("userId", user.user_id);
+                localStorage.setItem("name", user.name);
+                localStorage.setItem("userName", user.username);
+
+                return response;
             } catch (error) {
-                return error;
+                throw new Error("Registration failed. Please try again.");
             }
         },
         getUserInfo: async (userId) => {

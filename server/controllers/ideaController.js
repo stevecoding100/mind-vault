@@ -7,7 +7,6 @@ const ideaController = {
         const { userId } = req.params;
         try {
             const ideas = await ideaModel.getAllIdeas(userId);
-
             res.json(ideas);
         } catch (error) {
             console.error("Error fetching ideas controllers:", error);

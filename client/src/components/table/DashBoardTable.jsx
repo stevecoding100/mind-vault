@@ -12,6 +12,7 @@ const DashBoardTable = ({
     filterIdeas,
     filteredIdeas,
     toggleIdeas,
+    loadingIdeas,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedIdea, setSelectedIdea] = useState(null);
@@ -76,7 +77,12 @@ const DashBoardTable = ({
                     <p className="text-xs md:text-sm  font-medium">Action</p>
                 </div>
             </div>
-            {hasNoIdeas ? (
+
+            {loadingIdeas ? (
+                <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
+                    Loading...
+                </p>
+            ) : hasNoIdeas ? (
                 <p className="text-center text-md md:text-xl font-bold text-slate-600 mt-20">
                     Create a new idea
                 </p>

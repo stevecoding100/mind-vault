@@ -13,6 +13,7 @@ const MainDashboard = ({
     userId,
     setIdeas,
     setError,
+    loadingIdeas,
 }) => {
     const [selectedIdea, setSelectedIdea] = useState(null);
     const [inProgressIdeas, setInProgressIdeas] = useState(null);
@@ -36,7 +37,7 @@ const MainDashboard = ({
             // // Close the modal
             onOpenChange(false);
         } catch (error) {
-            setError(error.message);
+            setError(error);
         }
     };
     // Editing an Idea
@@ -129,6 +130,7 @@ const MainDashboard = ({
                     filteredIdeas={filteredIdeas}
                     onOpen={onOpen}
                     toggleIdeas={toggleIdeas}
+                    loadingIdeas={loadingIdeas}
                 />
             </div>
         </div>

@@ -8,7 +8,6 @@ const ideaModel = {
             const SQL = `SELECT * FROM ideas WHERE user_id = $1`;
             console.log("This is the user ID", userId);
             const { rows } = await client.query(SQL, [userId]);
-            console.log("Here:", rows);
             return rows;
         } catch (error) {
             console.error("Error fetching ideas: ", error);
