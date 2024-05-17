@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import MainDashboard from "./pages/dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
@@ -19,31 +19,46 @@ function App() {
     const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
     const [ideas, setIdeas] = useState([]);
+    const isAuthenticated = !!localStorage.getItem("token");
 
-    const location = useLocation();
     const navigate = useNavigate();
+    const location = useLocation();
 
     // Define routes where SideMenu should be hidden
-    const hideSideMenuRoutes = ["/", "/signup"];
+    const hideSideMenuRoutes = ["/login", "/signup"];
 
     // Check if the current route should hide the SideMenu
     const shouldHideSideMenu = hideSideMenuRoutes.includes(location.pathname);
 
     // Getting all ideas
-    const fetchIdeas = async (userId) => {
+    const fetchIdeas = async () => {
+        if (!userId) {
+            setLoadingIdeas(false);
+            return;
+        }
+
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
             setIdeas(userIdeas);
             setLoadingIdeas(false);
         } catch (error) {
-            setError(error.message);
+            if (error.response && error.response.status === 404) {
+                // Handle case where no ideas are found
+                setIdeas([]);
+            } else {
+                // Handle other errors
+                setError(error.message);
+            }
+        } finally {
             setLoadingIdeas(false);
         }
     };
 
     useEffect(() => {
-        fetchIdeas(userId);
-    }, []);
+        if (isAuthenticated && userId) {
+            fetchIdeas();
+        }
+    }, [isAuthenticated, userId]);
 
     const handleSignOut = () => {
         // Clear user authentication data from local storage
@@ -53,45 +68,57 @@ function App() {
         localStorage.removeItem("userName");
 
         // Redirect to the sign-in page or any other desired route
-        navigate("/");
+        navigate("/login");
     };
 
     return (
         <div className="flex flex-col h-full">
-            {!shouldHideSideMenu && (
+            {isAuthenticated && !shouldHideSideMenu && (
                 <NavBar name={name} userName={userName} ideas={ideas} />
             )}
             <div className="relative flex flex-col lg:flex-row  w-full h-full">
                 {/* Render SideMenu only if it should not be hidden */}
-                {!shouldHideSideMenu && <SideMenu onOpen={onOpen} />}
+                {isAuthenticated && !shouldHideSideMenu && (
+                    <SideMenu onOpen={onOpen} />
+                )}
                 <Routes>
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <MainDashboard
-                                onOpen={onOpen}
-                                isOpen={isOpen}
-                                onOpenChange={onOpenChange}
-                                error={error}
-                                fetchIdeas={fetchIdeas}
-                                ideas={ideas}
-                                setIdeas={setIdeas}
-                                userId={userId}
-                                setError={setError}
-                            />
-                        }
-                    />
-                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />
-                    <Route path="/aichat" element={<AIChat />} />
-                    <Route
-                        path="/settings"
-                        element={<SettingsMenu handleSignOut={handleSignOut} />}
-                    />
+                    {isAuthenticated && (
+                        <>
+                            <Route
+                                path="/"
+                                element={
+                                    <MainDashboard
+                                        onOpen={onOpen}
+                                        isOpen={isOpen}
+                                        onOpenChange={onOpenChange}
+                                        error={error}
+                                        fetchIdeas={fetchIdeas}
+                                        ideas={ideas}
+                                        setIdeas={setIdeas}
+                                        userId={userId}
+                                        setError={setError}
+                                    />
+                                }
+                            />
+                            <Route path="/aichat" element={<AIChat />} />
+                            <Route
+                                path="/settings"
+                                element={
+                                    <SettingsMenu
+                                        handleSignOut={handleSignOut}
+                                    />
+                                }
+                            />
+                        </>
+                    )}
                 </Routes>
             </div>
-            {/* Small Screens */}
-            {!shouldHideSideMenu && <MobileMenuBar onOpen={onOpen} />}
+            {/* Menubar for small screens */}
+            {isAuthenticated && !shouldHideSideMenu && (
+                <MobileMenuBar onOpen={onOpen} />
+            )}
         </div>
     );
 }

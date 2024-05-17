@@ -5,15 +5,19 @@ const ideaAPI = {
     idea: {
         getAllIdeas: async (userId) => {
             try {
-                const ideas = await axios.get(`${baseURL}/ideas/${userId}`, {
+                const response = await axios.get(`${baseURL}/ideas/${userId}`, {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `${localStorage.getItem("token")}`,
                     },
                 });
 
-                return ideas.data;
+                return response.data;
             } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    // Handle case where no ideas are found
+                    return [];
+                }
                 console.log(error);
                 throw new Error("Error getting ideasApi", error);
             }

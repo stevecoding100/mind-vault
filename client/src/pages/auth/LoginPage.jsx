@@ -13,10 +13,8 @@ const LoginPage = () => {
         e.preventDefault();
         const result = await authAPI.auth.login({ username, password });
 
-        console.log("User Info: ", result);
-
         if (result.status === 200) {
-            navigate("/dashboard");
+            navigate("/");
         } else {
             setError("Invalid username or password");
         }
