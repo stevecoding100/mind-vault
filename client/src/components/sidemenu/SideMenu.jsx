@@ -12,7 +12,7 @@ const SideMenu = ({ onOpen }) => {
     return (
         <div className="w-[300px] p-12 pt-20 hidden lg:block min-h-screen">
             <ul>
-                <Link to="/">
+                <Link to="/dashboard">
                     <li className="flex items-center mb-8 font-bold text-xs lg:text-sm hover:text-blue-700 cursor-pointer">
                         <BiHome size={18} className="mr-2" />
                         <button>Dashboard</button>

@@ -25,7 +25,7 @@ function App() {
     const location = useLocation();
 
     // Define routes where SideMenu should be hidden
-    const hideSideMenuRoutes = ["/login", "/signup"];
+    const hideSideMenuRoutes = ["/", "/signup"];
 
     // Check if the current route should hide the SideMenu
     const shouldHideSideMenu = hideSideMenuRoutes.includes(location.pathname);
@@ -36,7 +36,6 @@ function App() {
             setLoadingIdeas(false);
             return;
         }
-
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
             setIdeas(userIdeas);
@@ -68,7 +67,7 @@ function App() {
         localStorage.removeItem("userName");
 
         // Redirect to the sign-in page or any other desired route
-        navigate("/login");
+        navigate("/");
     };
 
     return (
@@ -82,12 +81,15 @@ function App() {
                     <SideMenu onOpen={onOpen} />
                 )}
                 <Routes>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/" element={<LoginPage />} />
+                    <Route
+                        path="/signup"
+                        element={<SignUpPage setIdeas={setIdeas} />}
+                    />
                     {isAuthenticated && (
                         <>
                             <Route
-                                path="/"
+                                path="/dashboard"
                                 element={
                                     <MainDashboard
                                         onOpen={onOpen}

@@ -14,7 +14,7 @@ const LoginPage = () => {
         const result = await authAPI.auth.login({ username, password });
 
         if (result.status === 200) {
-            navigate("/");
+            navigate("/dashboard");
         } else {
             setError("Invalid username or password");
         }

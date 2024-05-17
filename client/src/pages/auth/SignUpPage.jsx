@@ -20,8 +20,7 @@ const SignUpPage = () => {
                 password,
             });
             if (result.status === 201) {
-                console.log("User registered", result);
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 throw new Error(result.response.data.error);
             }
