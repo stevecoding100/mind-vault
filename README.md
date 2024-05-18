@@ -5,6 +5,8 @@ MindVault is an intuitive web application designed to help users capture, organi
 
 
 **Features**
+
+* **AI Technology:** Ask AI for some help on how to get started and bring  your idea to life.
 * **Idea Management:** Easily jot down your ideas and categorize them into three stages: Ideas, Idea Progress, and Idea Complete.
 * **User Authentication:** Securely register and log in to your account to access your ideas from anywhere.
 * **Persistent Storage:** Your ideas are securely stored in our PostgreSQL database, ensuring data integrity and reliability.
