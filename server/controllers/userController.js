@@ -19,6 +19,16 @@ const userController = {
         try {
             const { name, username, email, password } = req.body;
 
+            // // Check if the email or username already exists
+            // const existingUser = await userModel.findUserByEmailOrUsername(
+            //     email,
+            //     username
+            // );
+            // if (existingUser) {
+            //     return res
+            //         .status(409)
+            //         .json({ message: "Email or username already exists" });
+            // }
             const newUser = await userModel.createUser(
                 name,
                 username,
@@ -79,22 +89,18 @@ const userController = {
     },
     isLoggedIn: async (req, res, next) => {
         try {
-            const token = req.headers.authorization; // Get the token from the request headers
-
-            console.log("Token received in middleware:", token);
-            // Verify the token and get user information
-            const user = await authMiddleware.findUserWithToken(token);
+            const token = req.headers.authorization?.split(" ")[1]; // Get the token from the request headers
             if (!token) {
-                const error = new Error("Authentication token is missing");
-                error.status = 401;
-                throw error;
+                return res
+                    .status(401)
+                    .json({ message: "Authentication token is missing" });
             }
-
+            const user = await authMiddleware.findUserWithToken(token);
             req.user = user;
-            // Call the next middleware or route handler
             next();
         } catch (error) {
-            next(error);
+            console.error("Authentication error:", error);
+            res.status(error.status || 500).json({ message: error.message });
         }
     },
 };

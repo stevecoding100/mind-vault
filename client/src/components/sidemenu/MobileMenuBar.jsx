@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const MobileMenuBar = ({ onOpen }) => {
     return (
         <div className="w-full sticky  top-0 h-[100px] lg:hidden p-4 bg-slate-800">
-            <ul className="flex justify-between h-[80px] mt-1">
+            <ul className="flex justify-between h-[80px] px-4">
                 <button>
                     <Link to="/dashboard">
                         <li className="flex flex-col items-center  font-bold text-xs text-slate-200">

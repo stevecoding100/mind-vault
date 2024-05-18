@@ -9,7 +9,7 @@ const authMiddleware = {
             SELECT * FROM users WHERE username = $1
         `;
         const response = await client.query(SQL, [username]);
-        if (!response.rows.length) {
+        if (response.rows.length === 0) {
             const error = new Error("User not found");
             error.status = 401;
             throw error;
@@ -21,12 +21,11 @@ const authMiddleware = {
             error.status = 401;
             throw error;
         }
-        const token = jwt.sign({ id: user.user_id }, JWT);
+        const token = jwt.sign({ id: user.user_id }, JWT, { expiresIn: "1h" });
         return { token, userId: user.user_id, user };
     },
     findUserWithToken: async (token) => {
         try {
-            console.log("findUserToken function: ", token);
             // Verify the JWT token
             const payload = jwt.verify(token, JWT);
 
@@ -41,7 +40,9 @@ const authMiddleware = {
             // Return the user
             return response.rows[0];
         } catch (error) {
-            throw new Error("Invalid token");
+            const err = new Error("Invalid token");
+            err.status = 401;
+            throw err;
         }
     },
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authAPI from "../../../utils/authAPI";
 
-const LoginPage = () => {
+const LoginPage = ({ setName, setUserName, setUserId }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -14,6 +14,15 @@ const LoginPage = () => {
         const result = await authAPI.auth.login({ username, password });
 
         if (result.status === 200) {
+            localStorage.setItem("token", result.data.token);
+            localStorage.setItem("userId", result.data.userId);
+            localStorage.setItem("name", result.data.user.name);
+            localStorage.setItem("userName", result.data.user.username);
+
+            // Trigger state updates directly
+            setName(result.data.user.name);
+            setUserName(result.data.user.username);
+            setUserId(result.data.userId);
             navigate("/dashboard");
         } else {
             setError("Invalid username or password");

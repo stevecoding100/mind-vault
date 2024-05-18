@@ -13,9 +13,13 @@ import ideaAPI from "../utils/ideaAPI";
 
 function App() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [name, setName] = useState(localStorage.getItem("name"));
-    const [userName, setUserName] = useState(localStorage.getItem("userName"));
-    const [userId, setUserId] = useState(localStorage.getItem("userId"));
+    const [name, setName] = useState(localStorage.getItem("name") || null);
+    const [userName, setUserName] = useState(
+        localStorage.getItem("userName") || null
+    );
+    const [userId, setUserId] = useState(
+        localStorage.getItem("userId") || null
+    );
     const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
     const [ideas, setIdeas] = useState([]);
@@ -39,11 +43,9 @@ function App() {
         try {
             const userIdeas = await ideaAPI.idea.getAllIdeas(userId);
             setIdeas(userIdeas);
-            setError(null); // Clear any previous errors
+            setLoadingIdeas(false);
         } catch (error) {
-            // Handle other errors
             setError(error.message);
-        } finally {
             setLoadingIdeas(false);
         }
     };
@@ -63,7 +65,7 @@ function App() {
         setName(null);
         setUserName(null);
         setUserId(null);
-        // setIdeas([]);
+        setIdeas([]);
         navigate("/");
     };
 
@@ -78,10 +80,25 @@ function App() {
                     <SideMenu onOpen={onOpen} />
                 )}
                 <Routes>
-                    <Route path="/" element={<LoginPage />} />
+                    <Route
+                        path="/"
+                        element={
+                            <LoginPage
+                                setName={setName}
+                                setUserName={setUserName}
+                                setUserId={setUserId}
+                            />
+                        }
+                    />
                     <Route
                         path="/signup"
-                        element={<SignUpPage setIdeas={setIdeas} />}
+                        element={
+                            <SignUpPage
+                                setName={setName}
+                                setUserName={setUserName}
+                                setUserId={setUserId}
+                            />
+                        }
                     />
                     {isAuthenticated && (
                         <>

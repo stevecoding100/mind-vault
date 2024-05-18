@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authAPI from "../../../utils/authAPI";
 
-const SignUpPage = () => {
+const SignUpPage = ({ setName, setUserName, setUserId }) => {
     const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
+    const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [error, setError] = useState("");
@@ -14,12 +14,22 @@ const SignUpPage = () => {
         e.preventDefault();
         try {
             const result = await authAPI.auth.register({
-                name,
+                name: fullName,
                 username,
                 email,
                 password,
             });
             if (result.status === 201) {
+                localStorage.setItem("token", result.data.token);
+                localStorage.setItem("userId", result.data.userId);
+                localStorage.setItem("name", result.data.name);
+                localStorage.setItem("userName", result.data.username);
+
+                // Trigger state updates directly
+                setName(result.data.name);
+                setUserName(result.data.username);
+                setUserId(result.data.userId);
+
                 navigate("/dashboard");
             } else {
                 throw new Error(result.response.data.error);
@@ -43,7 +53,7 @@ const SignUpPage = () => {
                     src={
                         "https://static.vecteezy.com/system/resources/thumbnails/022/719/920/small/virtual-brain-with-splash-paint-isolated-on-white-banner-brainstorm-concept-place-for-text-generative-ai-photo.jpg"
                     }
-                    alt="popular anime show"
+                    alt="mind image"
                 />
                 <div className="fixed top-0 left-0 w-full h-screen"></div>
                 <div className="fixed w-full px-3 py-12 z-50">
@@ -62,8 +72,10 @@ const SignUpPage = () => {
                                     name="name"
                                     id="name"
                                     placeholder="Name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={fullName}
+                                    onChange={(e) =>
+                                        setFullName(e.target.value)
+                                    }
                                     required
                                 />
                                 <input
@@ -125,7 +137,7 @@ const SignUpPage = () => {
                                     <span className="text-gray-400">
                                         Already a user to MindVault?
                                     </span>
-                                    <Link to="/login" className="text-gray-200">
+                                    <Link to="/" className="text-gray-200">
                                         {" "}
                                         Sign In
                                     </Link>

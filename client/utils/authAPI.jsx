@@ -11,12 +11,6 @@ const authAPI = {
                     `${baseURL}/auth/users/login`,
                     formData
                 );
-
-                const { token, user } = response.data;
-                localStorage.setItem("token", token);
-                localStorage.setItem("userId", user.user_id);
-                localStorage.setItem("name", user.name);
-                localStorage.setItem("userName", user.username);
                 return response;
             } catch (error) {
                 throw new Error("Login failed. Please check your credentials.");
@@ -28,13 +22,6 @@ const authAPI = {
                     `${baseURL}/auth/users/signup`,
                     formData
                 );
-
-                const { token, user } = response.data;
-                localStorage.setItem("token", token);
-                localStorage.setItem("userId", user.user_id);
-                localStorage.setItem("name", user.name);
-                localStorage.setItem("userName", user.username);
-
                 return response;
             } catch (error) {
                 throw new Error("Registration failed. Please try again.");
