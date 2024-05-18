@@ -36,10 +36,22 @@ const DashBoardTable = ({
         filterIdeas(query);
     };
 
+    // Function to format date
+    const formatCreatedAt = (createdAt) => {
+        const date = new Date(createdAt);
+        const formattedDate = date.toLocaleDateString();
+        const formattedTime = date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        return `${formattedDate} - ${formattedTime}`;
+    };
+
     // Determine which set of ideas to display based on  displayAllIdeas prop
     const ideasToMap = displayAllIdeas ? ideaData : inProgressIdeas;
     const ideasToDisplay = searchQuery.length > 0 ? filteredIdeas : ideasToMap; // Check if the user is logged in and has no ideas attached to their account
     const hasNoIdeas = ideaData.length === 0;
+
     return (
         <div className="w-full mx-auto flex flex-col items-center md:border-l-1 md:border-t-1 rounded-sm border-[#DADCE2] p-4 md:p-10 h-[75vh] mb-16  overflow-y-scroll scroll-smooth">
             <input
@@ -67,7 +79,7 @@ const DashBoardTable = ({
                     {displayAllIdeas ? "In Progress" : "All Ideas"}
                 </button>
 
-                <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[400px] ml-4 justify-between lg:items-center">
+                <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[450px] ml-4 justify-between lg:items-center">
                     <p className="text-xs md:text-sm font-medium ml-3 lg:ml-0">
                         Status
                     </p>
@@ -100,7 +112,7 @@ const DashBoardTable = ({
                                 {truncateDescription(idea.description)}
                             </p>
                         </div>
-                        <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[400px] justify-between items-center lg:mr-3">
+                        <div className="flex min-w-[185px] md:min-w-[250px] xl:min-w-[450px] justify-between items-center lg:mr-3">
                             <p
                                 className={`text-xs md:text-sm xl:text-md font-bold ${
                                     idea.category === "Complete"
@@ -111,7 +123,7 @@ const DashBoardTable = ({
                                 {idea.category}
                             </p>
                             <p className="text-[.5rem] md:text-xs text-[#4D5566] font-medium">
-                                May 11 12:35 PM
+                                {formatCreatedAt(idea.created_at)}
                             </p>
                             <HiDotsVertical
                                 className="text-md text-[#505970] mr-2 lg:mr-0"
