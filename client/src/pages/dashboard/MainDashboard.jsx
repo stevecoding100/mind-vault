@@ -21,18 +21,18 @@ const MainDashboard = ({
     const [filteredIdeas, setFilteredIdeas] = useState([]);
 
     // Creating an Idea
-    const handleCreateIdea = async (newIdea) => {
+    const handleCreateIdea = async (title, description, category) => {
         try {
             // Create the new idea
             const createdIdea = await ideaAPI.idea.createIdea(
-                userId,
-                newIdea.title,
-                newIdea.description,
-                newIdea.category
+                title,
+                description,
+                category,
+                userId
             );
 
             // Add the newly created idea to the state
-            setIdeas([createdIdea.data, ...ideas]);
+            setIdeas([createdIdea, ...ideas]);
 
             // // Close the modal
             onOpenChange(false);

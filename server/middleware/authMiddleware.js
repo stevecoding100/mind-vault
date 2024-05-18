@@ -22,7 +22,8 @@ const authMiddleware = {
             throw error;
         }
         const token = jwt.sign({ id: user.user_id }, JWT, { expiresIn: "1h" });
-        return { token, userId: user.user_id, user };
+
+        return { token, user };
     },
     findUserWithToken: async (token) => {
         try {

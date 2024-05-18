@@ -15,14 +15,25 @@ const ideaModel = {
         }
     },
     createIdea: async (title, description, category, userId) => {
+        // Validate inputs
+        if (!title || !description || !category || !userId) {
+            throw new Error(
+                "Missing required fields: title, description, category, userId"
+            );
+        }
+
+        // Ensure client is properly initialized
+        if (!client) {
+            throw new Error("Database client is not initialized");
+        }
         try {
             const SQL = `INSERT INTO ideas (idea_id, title, description, category, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
             const values = [uuid.v4(), title, description, category, userId];
             const { rows } = await client.query(SQL, values);
             return rows[0];
         } catch (error) {
-            console.error("Error creating idea", error);
-            throw error;
+            console.error("Error creating idea:", error.message);
+            throw new Error("Error creating idea");
         }
     },
     updateIdea: async (ideaId, title, description, category) => {

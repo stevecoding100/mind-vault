@@ -8,7 +8,7 @@ const NavBar = () => {
             {/* Logo Section */}
             <div className="flex items-center">
                 <LuBrainCircuit size={22} className="text-blue-700 ml-2" />
-                <h4 className="text-[#3f475a] text-lg ml-2 font-bold">
+                <h4 className="text-[#3f475a] text-lg xl:text-xl ml-2 font-bold">
                     MindVault
                 </h4>
             </div>

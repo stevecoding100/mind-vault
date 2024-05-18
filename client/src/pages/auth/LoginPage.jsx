@@ -14,15 +14,18 @@ const LoginPage = ({ setName, setUserName, setUserId }) => {
         const result = await authAPI.auth.login({ username, password });
 
         if (result.status === 200) {
+            console.log("Login Page: ", result.data);
+
             localStorage.setItem("token", result.data.token);
-            localStorage.setItem("userId", result.data.userId);
+            localStorage.setItem("userId", result.data.user.user_id);
             localStorage.setItem("name", result.data.user.name);
             localStorage.setItem("userName", result.data.user.username);
 
             // Trigger state updates directly
             setName(result.data.user.name);
             setUserName(result.data.user.username);
-            setUserId(result.data.userId);
+            setUserId(result.data.user.user_id);
+
             navigate("/dashboard");
         } else {
             setError("Invalid username or password");

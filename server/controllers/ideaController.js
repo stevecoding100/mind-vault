@@ -16,6 +16,10 @@ const ideaController = {
     createIdea: async (req, res) => {
         const { userId } = req.params;
         const { title, description, category } = req.body;
+        // Validate input
+        if (!title || !description || !category || !userId) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
         try {
             const newIdea = await ideaModel.createIdea(
                 title,
@@ -26,8 +30,8 @@ const ideaController = {
 
             res.status(201).json(newIdea);
         } catch (error) {
-            console.error("Error creating idea:", error);
-            res.status(500).json({ message: "Internal server error" });
+            console.error("Error creating idea:", error.message);
+            return res.status(500).json({ message: "Internal server error" });
         }
     },
     updateIdea: async (req, res) => {

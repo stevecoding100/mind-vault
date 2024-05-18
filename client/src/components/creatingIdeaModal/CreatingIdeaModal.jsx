@@ -47,7 +47,7 @@ export default function CreatingIdeaModal({
                     category,
                 });
             } else {
-                await onCreateIdea({ title, description, category });
+                await onCreateIdea(title, description, category);
             }
             handleCloseModal(); // Close the modal and reset state
         } catch (error) {

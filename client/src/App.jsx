@@ -20,6 +20,7 @@ function App() {
     const [userId, setUserId] = useState(
         localStorage.getItem("userId") || null
     );
+
     const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
     const [ideas, setIdeas] = useState([]);
@@ -65,7 +66,6 @@ function App() {
         setName(null);
         setUserName(null);
         setUserId(null);
-        setIdeas([]);
         navigate("/");
     };
 

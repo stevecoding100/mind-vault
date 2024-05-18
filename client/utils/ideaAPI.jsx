@@ -7,8 +7,9 @@ const ideaAPI = {
             try {
                 const response = await axios.get(`${baseURL}/ideas/${userId}`, {
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
                     },
                 });
 
@@ -22,21 +23,25 @@ const ideaAPI = {
                 throw new Error("Error getting ideas from API");
             }
         },
-        createIdea: async (userId, title, description, category) => {
+        createIdea: async (title, description, category, userId) => {
             try {
-                const createIdeas = await axios.post(
+                const response = await axios.post(
                     `${baseURL}/ideas/${userId}`,
                     { title, description, category },
                     {
                         headers: {
-                            Authorization: `${localStorage.getItem("token")}`,
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
+                            "Content-Type": "application/json",
                         },
                     }
                 );
-                console.log("Line 32: ", createIdeas);
-                return createIdeas;
+
+                return response.data;
             } catch (error) {
-                throw new Error("Error creating idea", error);
+                console.error("Error creating idea:", error.message || error);
+                throw new Error("Error creating idea");
             }
         },
         updateIdea: async (ideaId, updateData) => {
@@ -46,7 +51,9 @@ const ideaAPI = {
                     updateData,
                     {
                         headers: {
-                            Authorization: `${localStorage.getItem("token")}`,
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
                         },
                     }
                 );
@@ -59,7 +66,9 @@ const ideaAPI = {
             try {
                 const idea = await axios.get(`${baseURL}/ideas/${ideaId}`, {
                     headers: {
-                        Authorization: `${localStorage.getItem("token")}`,
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
                     },
                 });
                 return idea;
@@ -73,7 +82,9 @@ const ideaAPI = {
                     `${baseURL}/ideas/${ideaId}`,
                     {
                         headers: {
-                            Authorization: `${localStorage.getItem("token")}`,
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
                         },
                     }
                 );
