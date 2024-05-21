@@ -24,10 +24,6 @@ app.get("/", (req, res) => {
 app.use("/api", ideaRoutes);
 app.use("/api/auth", userRoutes);
 
-app.use("/", (req, res) => {
-    res.json({ message: "Server is running!" });
-});
-
 const init = async () => {
     try {
         console.log("connecting to database");
