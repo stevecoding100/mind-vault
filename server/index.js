@@ -12,15 +12,20 @@ app.use(
     cors({
         origin: "*", // Allow all origins
         methods: ["GET", "POST", "PUT", "DELETE"], // Allow all methods
-        allowedHeaders: "Content-Type,Authorization",
+        allowedHeaders: "Content-Type, Authorization",
     })
 );
+// Use routes
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
 
 // Mount routes
 app.use("/api", ideaRoutes);
 app.use("/api/auth", userRoutes);
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
+
+app.use("/", (req, res) => {
+    res.json({ message: "Server is running!" });
 });
 
 const init = async () => {

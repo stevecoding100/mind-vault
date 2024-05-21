@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_PRODUCTION_API_URL;
 
 const ideaAPI = {
     idea: {
@@ -12,7 +12,7 @@ const ideaAPI = {
                         )}`,
                     },
                 });
-
+                console.log("fetching ideas", response.data);
                 return response.data;
             } catch (error) {
                 if (error.response) {

@@ -10,40 +10,30 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const result = await authAPI.auth.register({
-                name: fullName,
-                username,
-                email,
-                password,
-            });
+        const result = await authAPI.auth.register({
+            name: fullName,
+            username,
+            email,
+            password,
+        });
 
-            console.log("Line 23:", result);
-            if (result.status === 201) {
-                localStorage.setItem("token", result.data.token);
-                localStorage.setItem("userId", result.data.userId);
-                localStorage.setItem("name", result.data.name);
-                localStorage.setItem("userName", result.data.username);
+        console.log("Line 23:", result);
+        if (result.status === 201) {
+            localStorage.setItem("token", result.data.token);
+            localStorage.setItem("userId", result.data.userId);
+            localStorage.setItem("name", result.data.name);
+            localStorage.setItem("userName", result.data.username);
 
-                // Trigger state updates directly
-                setName(result.data.name);
-                setUserName(result.data.username);
-                setUserId(result.data.userId);
-
-                navigate("/dashboard");
-            } else {
-                throw new Error(result.response.data.error);
-            }
-        } catch (err) {
-            if (err.message.includes("users_email_key")) {
-                setError("Email already in use. Please try again.");
-            } else if (err.message.includes("users_username_key")) {
-                setError("Username already in use. Please try again.");
-            } else {
-                setError("An error occurred. Please try again.");
-            }
+            // Trigger state updates directly
+            setName(result.data.name);
+            setUserName(result.data.username);
+            setUserId(result.data.userId);
+            navigate("/dashboard");
+        } else {
+            setError("Invalid missing field");
         }
     };
 
