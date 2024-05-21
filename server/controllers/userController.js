@@ -2,7 +2,7 @@
 
 const userModel = require("../models/user");
 const authMiddleware = require("../middleware/authMiddleware");
-const JWT = process.env.JWT;
+const JWT_SECRET = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 const userController = {
     getUserById: async (req, res) => {
@@ -19,24 +19,13 @@ const userController = {
         try {
             const { name, username, email, password } = req.body;
 
-            // // Check if the email or username already exists
-            // const existingUser = await userModel.findUserByEmailOrUsername(
-            //     email,
-            //     username
-            // );
-            // if (existingUser) {
-            //     return res
-            //         .status(409)
-            //         .json({ message: "Email or username already exists" });
-            // }
             const newUser = await userModel.createUser(
                 name,
                 username,
                 email,
                 password
             );
-            // Generate JWT token
-            const token = jwt.sign({ userId: newUser.user_id }, JWT);
+            const token = jwt.sign({ id: newUser.user_id }, JWT_SECRET);
 
             // Respond with token and user data
             res.status(201).json({
@@ -80,8 +69,23 @@ const userController = {
     authenticaUser: async (req, res) => {
         try {
             const { username, password } = req.body;
-            const user = await authMiddleware.authenticate(username, password);
-            res.status(200).json(user);
+            const { token, user } = await authMiddleware.authenticate(
+                username,
+                password
+            );
+            if (!user) {
+                return res.status(401).json({
+                    message: "Invalid username or password",
+                });
+            }
+
+            res.status(200).json({
+                token,
+                userId: user.user_id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+            });
         } catch (error) {
             console.error("Authentication error:", error);
             res.status(error.status || 500).json("Internal server error");

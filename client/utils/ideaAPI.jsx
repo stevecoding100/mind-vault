@@ -30,10 +30,10 @@ const ideaAPI = {
                     { title, description, category },
                     {
                         headers: {
+                            "Content-Type": "application/json",
                             Authorization: `Bearer ${localStorage.getItem(
                                 "token"
                             )}`,
-                            "Content-Type": "application/json",
                         },
                     }
                 );

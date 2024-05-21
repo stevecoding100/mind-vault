@@ -19,6 +19,8 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
                 email,
                 password,
             });
+
+            console.log("Line 23:", result);
             if (result.status === 201) {
                 localStorage.setItem("token", result.data.token);
                 localStorage.setItem("userId", result.data.userId);

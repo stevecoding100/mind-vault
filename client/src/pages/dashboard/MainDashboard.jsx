@@ -37,7 +37,7 @@ const MainDashboard = ({
             // // Close the modal
             onOpenChange(false);
         } catch (error) {
-            setError(error);
+            setError(error || "Error creating idea");
         }
     };
     // Editing an Idea

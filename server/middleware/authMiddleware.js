@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { client } = require("../database/db");
-const JWT = process.env.JWT;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const authMiddleware = {
     authenticate: async (username, password) => {
@@ -21,14 +21,14 @@ const authMiddleware = {
             error.status = 401;
             throw error;
         }
-        const token = jwt.sign({ id: user.user_id }, JWT, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user.user_id }, JWT_SECRET);
 
         return { token, user };
     },
     findUserWithToken: async (token) => {
         try {
             // Verify the JWT token
-            const payload = jwt.verify(token, JWT);
+            const payload = jwt.verify(token, JWT_SECRET);
 
             // Fetch the user from the database using the user_id from the token
             const SQL = `SELECT * FROM users WHERE user_id = $1`;
