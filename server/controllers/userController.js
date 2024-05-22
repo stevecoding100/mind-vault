@@ -30,7 +30,7 @@ const userController = {
             // Respond with token and user data
             res.status(201).json({
                 token,
-                newUser,
+                user: newUser,
             });
         } catch (error) {
             console.error("Error creating user: ", error);
