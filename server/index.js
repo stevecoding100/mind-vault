@@ -15,10 +15,10 @@ app.use(
         allowedHeaders: "Content-Type, Authorization",
     })
 );
-// Use routes
-app.get("/", (req, res) => {
-    res.send("Hello, World!");
-});
+// // Use routes
+// app.use("/", (req, res) => {
+//     res.send("Hello, World!");
+// });
 
 // Mount routes
 app.use("/api", ideaRoutes);
