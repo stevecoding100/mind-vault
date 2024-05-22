@@ -15,14 +15,12 @@ app.use(
         allowedHeaders: "Content-Type, Authorization",
     })
 );
-// // Use routes
-// app.use("/", (req, res) => {
-//     res.send("Hello, World!");
-// });
-
 // Mount routes
 app.use("/api", ideaRoutes);
 app.use("/api/auth", userRoutes);
+app.get("/", (req, res) => {
+    res.send("Hello, World!");
+});
 
 const init = async () => {
     try {

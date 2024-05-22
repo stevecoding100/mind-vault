@@ -30,10 +30,7 @@ const userController = {
             // Respond with token and user data
             res.status(201).json({
                 token,
-                userId: newUser.user_id,
-                name: newUser.name,
-                username: newUser.username,
-                email: newUser.email,
+                newUser,
             });
         } catch (error) {
             console.error("Error creating user: ", error);
@@ -81,10 +78,7 @@ const userController = {
 
             res.status(200).json({
                 token,
-                userId: user.user_id,
-                name: user.name,
-                username: user.username,
-                email: user.email,
+                user,
             });
         } catch (error) {
             console.error("Authentication error:", error);
