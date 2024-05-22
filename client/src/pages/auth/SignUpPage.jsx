@@ -20,17 +20,16 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
             password,
         });
 
-        console.log("Line 23:", result);
         if (result.status === 201) {
             localStorage.setItem("token", result.data.token);
-            localStorage.setItem("userId", result.data.userId);
-            localStorage.setItem("name", result.data.name);
-            localStorage.setItem("userName", result.data.username);
+            localStorage.setItem("userId", result.data.user.user_id);
+            localStorage.setItem("name", result.data.user.name);
+            localStorage.setItem("userName", result.data.user.username);
 
             // Trigger state updates directly
-            setName(result.data.name);
-            setUserName(result.data.username);
-            setUserId(result.data.userId);
+            setName(result.data.user.name);
+            setUserName(result.data.user.username);
+            setUserId(result.data.user.user_id);
             navigate("/dashboard");
         } else {
             setError("Invalid missing field");
