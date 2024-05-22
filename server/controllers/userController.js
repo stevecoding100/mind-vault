@@ -12,7 +12,9 @@ const userController = {
             res.json(users);
         } catch (error) {
             console.error("Error fetching user by ID:", error);
-            res.status(500).json({ message: "User not found" });
+            res.status(500).json({
+                message: "UserController error fetching user by ID",
+            });
         }
     },
     createUser: async (req, res) => {
@@ -34,7 +36,9 @@ const userController = {
             });
         } catch (error) {
             console.error("Error creating user: ", error);
-            res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({
+                message: "UserController error creating user",
+            });
         }
     },
     updateUser: async (req, res) => {
@@ -50,7 +54,9 @@ const userController = {
             res.json(updateUser);
         } catch (error) {
             console.error("Error updating user", error);
-            res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({
+                message: "UserController error updating user",
+            });
         }
     },
     deleteUser: async (req, res) => {
@@ -60,7 +66,9 @@ const userController = {
             res.json({ message: "User deleted successfully!" });
         } catch (error) {
             console.error("Error deleting user", error);
-            res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({
+                message: " UserController error deleting user",
+            });
         }
     },
     authenticaUser: async (req, res) => {
@@ -82,7 +90,9 @@ const userController = {
             });
         } catch (error) {
             console.error("Authentication error:", error);
-            res.status(error.status || 500).json("Internal server error");
+            res.status(error.status || 500).json(
+                "UserController error authenticating user"
+            );
         }
     },
     isLoggedIn: async (req, res, next) => {
