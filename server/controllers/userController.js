@@ -21,18 +21,18 @@ const userController = {
         try {
             const { name, username, email, password } = req.body;
 
-            const newUser = await userModel.createUser(
+            const user = await userModel.createUser(
                 name,
                 username,
                 email,
                 password
             );
-            const token = jwt.sign({ id: newUser.user_id }, JWT_SECRET);
+            const token = jwt.sign({ id: user.user_id }, JWT_SECRET);
 
             // Respond with token and user data
             res.status(201).json({
                 token,
-                user: newUser,
+                user,
             });
         } catch (error) {
             console.error("Error creating user: ", error);
