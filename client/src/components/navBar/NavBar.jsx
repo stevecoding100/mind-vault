@@ -2,7 +2,7 @@ import React from "react";
 import { LuBrainCircuit } from "react-icons/lu";
 import { FaBell } from "react-icons/fa";
 
-const NavBar = () => {
+const NavBar = ({ name, userName }) => {
     return (
         <div className="flex items-center justify-between pt-8 px-6 md:p-12 w-full">
             {/* Logo Section */}
@@ -26,12 +26,8 @@ const NavBar = () => {
                     />
 
                     <div>
-                        <p className="font-bold text-sm md:text-md">
-                            {localStorage.getItem("name")}
-                        </p>
-                        <p className="text-sm">
-                            {localStorage.getItem("userName")}
-                        </p>
+                        <p className="font-bold text-sm md:text-md">{name}</p>
+                        <p className="text-sm">{userName}</p>
                     </div>
                 </div>
             </div>

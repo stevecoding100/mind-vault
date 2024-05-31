@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 const baseURL = import.meta.env.VITE_PRODUCTION_API_URL;
 
 const ideaAPI = {
@@ -7,9 +8,7 @@ const ideaAPI = {
             try {
                 const response = await axios.get(`${baseURL}/ideas/${userId}`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
                 });
                 console.log("fetching ideas", response.data);
@@ -31,9 +30,7 @@ const ideaAPI = {
                     {
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
+                            Authorization: `Bearer ${Cookies.get("token")}`,
                         },
                     }
                 );
@@ -51,9 +48,7 @@ const ideaAPI = {
                     updateData,
                     {
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
+                            Authorization: `Bearer ${Cookies.get("token")}`,
                         },
                     }
                 );
@@ -66,9 +61,7 @@ const ideaAPI = {
             try {
                 const idea = await axios.get(`${baseURL}/ideas/${ideaId}`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
                 });
                 return idea;
@@ -82,9 +75,7 @@ const ideaAPI = {
                     `${baseURL}/ideas/${ideaId}`,
                     {
                         headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
+                            Authorization: `Bearer ${Cookies.get("token")}`,
                         },
                     }
                 );
