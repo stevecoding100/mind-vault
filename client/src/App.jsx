@@ -1,5 +1,6 @@
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import MainDashboard from "./pages/dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
@@ -13,18 +14,13 @@ import ideaAPI from "../utils/ideaAPI";
 
 function App() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [name, setName] = useState(localStorage.getItem("name") || null);
-    const [userName, setUserName] = useState(
-        localStorage.getItem("userName") || null
-    );
-    const [userId, setUserId] = useState(
-        localStorage.getItem("userId") || null
-    );
-
+    const [name, setName] = useState(Cookies.get("name") || null);
+    const [userName, setUserName] = useState(Cookies.get("userName") || null);
+    const [userId, setUserId] = useState(Cookies.get("userId") || null);
     const [loadingIdeas, setLoadingIdeas] = useState(true);
     const [error, setError] = useState(null);
     const [ideas, setIdeas] = useState([]);
-    const isAuthenticated = !!localStorage.getItem("token");
+    const isAuthenticated = !!Cookies.get("token");
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -58,11 +54,11 @@ function App() {
     }, [isAuthenticated, userId]);
 
     const handleSignOut = () => {
-        // Clear user authentication data from local storage
-        localStorage.removeItem("token");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("name");
-        localStorage.removeItem("userName");
+        // Clear user authentication data from cookies
+        Cookies.remove("token");
+        Cookies.remove("userId");
+        Cookies.remove("name");
+        Cookies.remove("userName");
         setName(null);
         setUserName(null);
         setUserId(null);

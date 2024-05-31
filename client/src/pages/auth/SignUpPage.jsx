@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import authAPI from "../../../utils/authAPI";
 
 const SignUpPage = ({ setName, setUserName, setUserId }) => {
@@ -7,6 +8,7 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
@@ -21,18 +23,31 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
         });
 
         if (result.status === 201) {
-            localStorage.setItem("token", result.data.token);
-            localStorage.setItem("userId", result.data.user.user_id);
-            localStorage.setItem("name", result.data.user.name);
-            localStorage.setItem("userName", result.data.user.username);
+            const token = result.data.token;
+            const userId = result.data.user.user_id;
+            const name = result.data.user.name;
+            const userName = result.data.user.username;
+
+            // Set cookies based on "Remember me" option
+            if (rememberMe) {
+                Cookies.set("token", token, { expires: 7 }); // Expires in 7 days
+                Cookies.set("userId", userId, { expires: 7 });
+                Cookies.set("name", name, { expires: 7 });
+                Cookies.set("userName", userName, { expires: 7 });
+            } else {
+                Cookies.set("token", token);
+                Cookies.set("userId", userId);
+                Cookies.set("name", name);
+                Cookies.set("userName", userName);
+            }
 
             // Trigger state updates directly
-            setName(result.data.user.name);
-            setUserName(result.data.user.username);
-            setUserId(result.data.user.user_id);
+            setName(name);
+            setUserName(userName);
+            setUserId(userId);
             navigate("/dashboard");
         } else {
-            setError("Invalid missing field");
+            setError("Invalid or missing field");
         }
     };
 
@@ -119,6 +134,10 @@ const SignUpPage = ({ setName, setUserName, setUserId }) => {
                                         <input
                                             className="mr-2"
                                             type="checkbox"
+                                            checked={rememberMe}
+                                            onChange={(e) =>
+                                                setRememberMe(e.target.checked)
+                                            }
                                         />
                                         Remember me
                                     </p>

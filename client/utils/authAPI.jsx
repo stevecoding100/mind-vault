@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import Cookies from "js-cookie";
 const baseURL = import.meta.env.VITE_PRODUCTION_API_URL;
 
 const authAPI = {
@@ -29,7 +29,7 @@ const authAPI = {
         },
         getUserInfo: async (userId) => {
             try {
-                const token = localStorage.getItem("token");
+                const token = Cookies.get("token");
                 if (!token) {
                     // Handle case where token is not found
                     throw new Error("Token not found");
