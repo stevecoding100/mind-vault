@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import axios from "axios";
 import {
@@ -10,18 +10,29 @@ import {
     TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
+import { FaRegCopy } from "react-icons/fa";
+
 const AIChat = () => {
     const [typing, setTyping] = useState(false);
-    const [messages, setMessages] = useState([
-        {
-            message:
-                "Hello, I am your AI assistant! What idea you have in mind?",
-            sender: "MindVault",
-            direction: "incoming", // Set direction for initial AI message
-            isMyMessage: false, // Set isMyMessage for initial AI message
-        },
-    ]);
-
+    const [messages, setMessages] = useState(() => {
+        // Retrieve messages from local storage
+        const savedMessages = localStorage.getItem("chatMessages");
+        return savedMessages
+            ? JSON.parse(savedMessages)
+            : [
+                  {
+                      message:
+                          "Hello, I am your AI assistant! What idea you have in mind?",
+                      sender: "MindVault",
+                      direction: "incoming",
+                      isMyMessage: false,
+                  },
+              ];
+    });
+    useEffect(() => {
+        // Save messages to local storage whenever they are updated
+        localStorage.setItem("chatMessages", JSON.stringify(messages));
+    }, [messages]);
     const handleSend = async (message) => {
         const newMessage = {
             message: message,
@@ -39,6 +50,17 @@ const AIChat = () => {
 
         // process message to chatGPT (send it over and see the response)
         await processMessageToGeminiAI(newMessages);
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(
+            () => {
+                console.log("Copied to clipboard");
+            },
+            (err) => {
+                console.error("Failed to copy: ", err);
+            }
+        );
     };
 
     async function processMessageToGeminiAI(chatMessages) {
@@ -119,12 +141,28 @@ const AIChat = () => {
                     >
                         {messages.map((message, i) => {
                             return (
-                                <Message
+                                <div
                                     key={i}
-                                    model={message}
-                                    isMyMessage={message.isMyMessage} // Pass isMyMessage prop
-                                    direction={message.direction} // Pass direction prop
-                                />
+                                    className={`flex items-center w-full md:w-[70%] ${
+                                        message.direction === "outgoing"
+                                            ? "justify-end"
+                                            : "justify-start"
+                                    }`}
+                                >
+                                    <Message
+                                        key={i}
+                                        model={message}
+                                        isMyMessage={message.isMyMessage} // Pass isMyMessage prop
+                                        direction={message.direction} // Pass direction prop
+                                    />
+                                    <FaRegCopy
+                                        className="ml-2 cursor-pointer"
+                                        title="Copy"
+                                        onClick={() =>
+                                            copyToClipboard(message.message)
+                                        }
+                                    />
+                                </div>
                             );
                         })}
                     </MessageList>

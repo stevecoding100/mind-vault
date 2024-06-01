@@ -59,6 +59,7 @@ function App() {
         Cookies.remove("userId");
         Cookies.remove("name");
         Cookies.remove("userName");
+        localStorage.removeItem("chatMessages");
         setName(null);
         setUserName(null);
         setUserId(null);
